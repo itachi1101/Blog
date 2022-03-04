@@ -3,16 +3,16 @@ import "../Pages/HomePage/homePage.css";
 import AllPosts from "./AllPosts";
 import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
+import { Context } from "../context/Context";
 export default function MyPosts() {
   const [posts, setPosts] = useState([]);
-  const { search } = useLocation();
+  const user = useContext(Context);
   const history = useHistory();
   useEffect(() => {
     const fetchPosts = async () => {
       const res = await axios.post(`http://localhost:5000/api/post/myposts/`, {
-        author: "monkey1",
+        author: user.user.user.username,
       });
-      console.log(res);
       setPosts(res.data.data);
     };
     fetchPosts();
@@ -30,6 +30,7 @@ export default function MyPosts() {
           alt=""
         />
       </div>
+
       <div className="home">
         <AllPosts posts={posts} />
       </div>

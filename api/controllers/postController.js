@@ -3,13 +3,14 @@ const multer = require("multer");
 
 module.exports.create = async (req, res) => {
   try {
-    const pic = req.file.buffer;
-    const { title, description, author } = req.body;
+    // const pic = req.file.buffer;
+    const { title, description, author, isPrivate, category } = req.body;
     const post = await Post.create({
       title,
       description,
-      pic,
       author,
+      isPrivate,
+      category,
     });
     res.status(201).json({
       post: post._doc,
@@ -42,5 +43,53 @@ module.exports.searchUserPosts = async (req, res) => {
       error: error.message,
       status: "no post found",
     });
+  }
+};
+
+module.exports.getAllPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({ isPrivate: false });
+    if (!posts) res.status(404).json({ posts: "no posts found" });
+    else {
+      res.status(200).json(posts);
+    }
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+module.exports.getPostById = async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const allPosts = await Post.findById(_id);
+    if (!allPosts) res.status(404).json({ posts: "no posts found" });
+    else {
+      res.status(200).json({ data: allPosts });
+    }
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+};
+module.exports.deletePostById = async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const post = await Post.findByIdAndDelete(_id);
+    if (!post) return res.status(400).send();
+    res.send(post);
+  } catch (err) {
+    res.status(500).json({ err: error });
+  }
+};
+module.exports.updatePostById = async (req, res) => {
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedPost);
+  } catch (err) {
+    res.status(500).json(err);
   }
 };

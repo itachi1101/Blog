@@ -21,5 +21,9 @@ router.post(
     res.status(400).json({ error: error.message });
   }
 );
-router.get("/api/post/myposts/", postController.searchUserPosts);
+router.get("/api/post/allposts", postController.getAllPosts);
+router.post("/api/post/myposts/", postController.searchUserPosts);
+router.get("/api/post/:id", postController.getPostById);
+router.delete("/api/post/:id", postController.deletePostById);
+router.put("/api/post/:id", postController.updatePostById);
 module.exports = router;

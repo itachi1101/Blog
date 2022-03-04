@@ -12,7 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
-// import { Context } from "../context/Context";
+import { Context } from "../context/Context";
+import { useContext } from "react";
 const pages = ["My Posts", "write", "About"];
 const settings = ["Profile", "Logout"];
 
@@ -34,7 +35,11 @@ const Header = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const user = true;
+  const { user, dispatch } = useContext(Context);
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    handleCloseUserMenu();
+  };
   return (
     <AppBar position="fixed" style={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
@@ -111,7 +116,7 @@ const Header = () => {
             component="div"
             sx={{ flexGrow: 2, display: { xs: "flex", md: "none" } }}
           >
-            <Link to="/" style={{ color: "black", textDecoration: "none"}}>
+            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
               THE BLOG
             </Link>
           </Typography>
@@ -150,7 +155,7 @@ const Header = () => {
               </MenuItem>
             </Link>
           </Box>
-          {user ? (
+          {user != null ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -176,16 +181,18 @@ const Header = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Link
-                      to={`/${setting}`}
-                      style={{ color: "black", textDecoration: "none" }}
-                    >
-                      <Typography textAlign="center">{setting}</Typography>
-                    </Link>
-                  </MenuItem>
-                ))}
+                <MenuItem key={"profile"} onClick={handleCloseUserMenu}>
+                  <Link
+                    to={`/profile`}
+                    style={{ color: "black", textDecoration: "none" }}
+                  >
+                    <Typography textAlign="center">PROFILE</Typography>
+                  </Link>
+                </MenuItem>
+                <MenuItem key={"logout"} onClick={handleLogout}>
+                  <Typography textAlign="center">LOGOUT</Typography>
+                </MenuItem>
+             
               </Menu>
             </Box>
           ) : (

@@ -11,21 +11,23 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 import axios from "axios";
+import { Context } from "../context/Context";
 export default function Post({ post, isLiked }) {
   const { title, description, updatedAt, _id } = post;
   const timestamp = new Date(updatedAt).toDateString();
   const [liked, setLiked] = useState(isLiked);
+  const user = React.useContext(Context);
   const handleClick = async () => {
     setLiked(!liked);
     if (liked === false) {
       await axios.put("http://localhost:5000/api/user/updatelikedposts/", {
         title: title,
-        username: "monkey1",
+        username: user.user.user.username,
       });
     } else {
       await axios.post("http://localhost:5000/api/user/deleteunlikedposts/", {
         title: title,
-        username: "monkey1",
+        username: user.user.user.username,
       });
     }
   };
@@ -54,7 +56,7 @@ export default function Post({ post, isLiked }) {
             }}
           />
         </IconButton>
-        <Link to={`post/${_id}`}>
+        <Link to={`/post/${_id}`}>
           <Badge style={{ cursor: "pointer" }}>Read More</Badge>
         </Link>
       </CardActions>

@@ -13,6 +13,14 @@ const postSchema = new mongoose.Schema(
     pic: {
       type: Buffer,
     },
+    category: {
+      type: String,
+      default: "global",
+    },
+    isPrivate: {
+      type: Boolean,
+      default: false,
+    },
     author: {
       type: String,
       required: true,

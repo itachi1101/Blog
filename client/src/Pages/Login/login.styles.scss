@@ -89,6 +89,9 @@ body {
       & .login-button:active {
         transform: translateY(-1px);
       }
+      &.login-buton:disabled {
+        cursor: not-allowed;
+      }
     }
   }
 }

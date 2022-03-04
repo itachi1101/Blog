@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import { useHistory,useLocation } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import Post from "./Post";
+import { Context } from "../context/Context";
 export default function AllPosts({ posts }) {
   const [likedarray, setLikedArray] = useState([]);
   const history = useHistory();
+  const user = useContext(Context);
   let temp = [];
   useEffect(() => {
     const fetchLikedPosts = async () => {
@@ -12,7 +14,7 @@ export default function AllPosts({ posts }) {
         const data = await axios.post(
           "http://localhost:5000/api/user/getlikedposts/",
           {
-            username: "monkey1",
+            username: user.user.user.username,
           }
         );
         data.data.data.map((post) => {

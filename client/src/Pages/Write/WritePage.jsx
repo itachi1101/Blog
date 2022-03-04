@@ -4,18 +4,20 @@ import { FaPlusCircle } from "react-icons/fa";
 import { useState, useContext, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { Context } from "../../context/Context";
 export default function WritePage() {
   const titleRef = useRef();
   const descRef = useRef();
   const [file, setFile] = useState(null);
   const [isPrivate, setIsPrivate] = useState(false);
   const history = useHistory();
+  const user = useContext(Context);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPost = {
       title: titleRef.current.value,
       description: descRef.current.value,
-      author: "monkey1",
+      author: user.user.user.username,
       isPrivate: isPrivate,
     };
     axios

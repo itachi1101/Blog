@@ -7,6 +7,8 @@ import About from "./Pages/About";
 import WritePage from "./Pages/Write/WritePage";
 import HomePage from "./Pages/HomePage/HomePage";
 import MyPosts from "./Pages/MyPosts";
+import Footer from "./Components/footer/Footer";
+import SinglePost from "./Pages/singlePost/SinglePost";
 export default function App() {
   return (
     <>
@@ -33,6 +35,9 @@ export default function App() {
           </Route>
           <Route path="/myposts">
             <MyPosts />
+          </Route>
+          <Route path="/post/:id">
+            <SinglePost />
           </Route>
         </Switch>
       </Router>

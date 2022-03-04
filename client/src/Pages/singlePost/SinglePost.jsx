@@ -1,94 +1,146 @@
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import "./singlePost.css";
-
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { Badge } from "react-bootstrap";
+import { Context } from "../../context/Context";
 export default function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
-  const [post, setPost] = useState({});
-  const PF = "http://localhost:5000/images/";
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [post, setPost] = useState([]);
   const [updateMode, setUpdateMode] = useState(false);
+  const user = useContext(Context);
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axios.get("http://localhost:5000/api/post/" + path);
+      setPost(res.data.data);
+      setTitle(res.data.data.title);
+      setDesc(res.data.data.description);
+    };
+    getPost();
+  }, [path]);
   const handleDelete = async () => {
     try {
-      await axios.delete(`/posts/${post._id}`, {
-        data: { username: user.username },
-      });
+      await axios.delete("http://localhost:5000/api/post/" + path);
       window.location.replace("/");
     } catch (err) {}
   };
-
   const handleUpdate = async () => {
     try {
-      await axios.put(`/posts/${post._id}`, {
-        username: user.username,
+      await axios.put(`http://localhost:5000/api/post/${path}`, {
+        username: user.user.user.username,
         title,
-        desc,
+        description: desc,
       });
       setUpdateMode(false);
+      window.location.replace("/");
     } catch (err) {}
   };
-
   return (
-    <div className="singlePost">
-      <div className="singlePostWrapper">
-        {post.photo && (
-          <img src={PF + post.photo} alt="" className="singlePostImg" />
-        )}
+    <Card
+      sx={{ minWidth: 345 }}
+      style={{
+        marginTop: "100px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginBottom: "100px",
+        width: "90%",
+        marginLeft: "3.8rem",
+      }}
+    >
+      <CardMedia
+        component="img"
+        alt="green iguana"
+        height="140"
+        src="https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+      />
+      <CardContent
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          height: "100%",
+          marginBottom: "50px",
+        }}
+      >
+        <Typography gutterBottom variant="h1" component="div">
+          {title}
+        </Typography>
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="div"
+          style={{ width: "100%", textAlign: "right", color: "blue" }}
+        >
+          Author: {post.username}
+        </Typography>
         {updateMode ? (
-          <input
-            type="text"
-            value={title}
-            className="singlePostTitleInput"
-            autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-          />
+          <>
+            <textarea
+              className="singlePostDescInput"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+              style={{
+                border: "none",
+                color: "#666",
+                fontSize: "18px",
+                lineHeight: "25px",
+                marginBottom: "30px",
+                width: "100%",
+                minHeight: "350px",
+              }}
+            />
+            <Badge
+              bg="success"
+              style={{ cursor: "pointer", fontSize: "1.3rem" }}
+              onClick={handleUpdate}
+            >
+              Update
+            </Badge>
+          </>
         ) : (
-          <h1 className="singlePostTitle">
-            {title}
-            {post.username === user?.username && (
-              <div className="singlePostEdit">
-                <i
-                  className="singlePostIcon far fa-edit"
-                  onClick={() => setUpdateMode(true)}
-                ></i>
-                <i
-                  className="singlePostIcon far fa-trash-alt"
-                  onClick={handleDelete}
-                ></i>
-              </div>
-            )}
-          </h1>
+          <Typography
+            variant="span"
+            color="text.secondary"
+            style={{ width: "100%", fontSize: "1.55rem", marginTop: "40px" }}
+          >
+            {desc}
+          </Typography>
         )}
-        <div className="singlePostInfo">
-          <span className="singlePostAuthor">
-            Author:
-            <Link to={`/?user=${post.username}`} className="link">
-              <b> {post.username}</b>
-            </Link>
-          </span>
-          <span className="singlePostDate">
-            {new Date(post.createdAt).toDateString()}
-          </span>
-        </div>
-        {updateMode ? (
-          <textarea
-            className="singlePostDescInput"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-          />
+      </CardContent>
+      <CardActions>
+        {user != null && updateMode === false ? (
+          <Badge
+            bg="success"
+            style={{ cursor: "pointer", fontSize: "1.3rem" }}
+            onClick={() => setUpdateMode(true)}
+          >
+            Edit
+          </Badge>
         ) : (
-          <p className="singlePostDesc">{desc}</p>
+          ""
         )}
-        {updateMode && (
-          <button className="singlePostButton" onClick={handleUpdate}>
-            Update
-          </button>
+        {user != null && updateMode === false ? (
+          <Badge
+            bg="danger"
+            style={{ cursor: "pointer", fontSize: "1.3rem" }}
+            onClick={handleDelete}
+          >
+            Delete
+          </Badge>
+        ) : (
+          ""
         )}
-      </div>
-    </div>
+      </CardActions>
+    </Card>
   );
 }
