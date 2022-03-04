@@ -11,8 +11,7 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     pic: {
-      type: String,
-      default: "",
+      type: Buffer,
     },
     author: {
       type: String,

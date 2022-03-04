@@ -1,7 +1,10 @@
 const Post = require("../models/post");
+const multer = require("multer");
+
 module.exports.create = async (req, res) => {
   try {
-    const { title, description, pic, author } = req.body;
+    const pic = req.file.buffer;
+    const { title, description, author } = req.body;
     const post = await Post.create({
       title,
       description,
@@ -41,4 +44,3 @@ module.exports.searchUserPosts = async (req, res) => {
     });
   }
 };
-
