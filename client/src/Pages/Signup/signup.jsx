@@ -26,6 +26,10 @@ export default function Signup() {
               <label>Upload Photo</label>
               <input type="file" placeholder=".jpg/jpeg" required />
             </div>
+            <span>
+              Creating an account means you're okay with our Terms of Service
+              and our Privacy Policy
+            </span>
             <div className="signup-button-wrapper">
               <button className="signup-button" type="submit">
                 Register

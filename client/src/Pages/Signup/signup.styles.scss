@@ -1,3 +1,6 @@
+body {
+  overflow-x: hidden;
+}
 .signup-Container {
   height: 100vh;
   width: 100vw;
@@ -13,6 +16,7 @@
     }
   }
   & .signup-Right {
+    margin-left: 7rem;
     width: 450px;
     height: 950px;
     & .signup-rightWrapper {
@@ -25,16 +29,13 @@
       height: 80%;
       padding: 2rem;
       span {
-        span {
-          color: blue;
-          cursor: pointer;
-        }
+        opacity: 50%;
       }
       h1 {
         text-align: center;
         margin-bottom: 5rem;
         letter-spacing: 2px;
-        color: lightcoral;
+        color: rgb(81, 39, 219);
       }
       & .signup-inputWrapper {
         display: flex;
@@ -46,6 +47,7 @@
           border-radius: 0.75rem;
           border-width: 1px;
         }
+
         label {
           margin-bottom: 1px;
           margin-left: 5px;
@@ -58,7 +60,7 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        margin-top: 5rem;
+        margin-top: 3rem;
       }
       & .signup-button {
         padding: 1.3em 2em;
@@ -77,8 +79,8 @@
         outline: none;
       }
       & .signup-button:hover {
-        background-color: #0dad6d;
-        box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+        background-color: rgb(81, 39, 219);
+        box-shadow: 0px 15px 20px rgba(81, 39, 219, 0.4);
         color: #fff;
         transform: translateY(-7px);
       }
@@ -89,7 +91,7 @@
   }
 }
 
-@media (max-width: 810px) {
+@media (max-width: 1030px) {
   .body,
   html {
     overflow-x: hidden;
@@ -97,20 +99,20 @@
   & .signup-Container {
     justify-content: center;
     align-items: center;
-}
-& .signup-Left {
+  }
+  & .signup-Left {
     display: none !important;
     width: 0%;
     img {
-        display: none;
+      display: none;
     }
-}
-& .signup-Right {
-    margin-left: 0;
+  }
+  & .signup-Right {
+    margin-left: 0 !important;
     margin-top: 100px;
     width: 80% !important;
-}
-& .signup-rightWrapper {
+  }
+  & .signup-rightWrapper {
     margin-left: 0 !important;
     background-color: whitesmoke;
   }
