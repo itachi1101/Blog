@@ -39,14 +39,26 @@
 }
 .writeText {
   font-size: 20px;
-  height: 100vh;
+  min-height: 100vh;
 }
-.writeSubmit {
+.writeSubmitprivate {
   position: absolute;
   top: 20px;
   right: 50px;
   color: white;
   background-color: teal;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.writeSubmitpublic {
+  position: absolute;
+  top: 20px;
+  right: 250px;
+  color: white;
+  background-color: lightcoral;
   padding: 10px;
   border: none;
   border-radius: 10px;

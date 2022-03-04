@@ -6,6 +6,7 @@ import Setting from "./Pages/Settings/settings";
 import About from "./Pages/About";
 import WritePage from "./Pages/Write/WritePage";
 import HomePage from "./Pages/HomePage/HomePage";
+import MyPosts from "./Pages/MyPosts";
 export default function App() {
   return (
     <>
@@ -13,7 +14,7 @@ export default function App() {
         <Header />
         <Switch>
           <Route exact path="/">
-            <HomePage/>
+            <HomePage />
           </Route>
           <Route path="/login">
             <Login />
@@ -29,6 +30,9 @@ export default function App() {
           </Route>
           <Route path="/write">
             <WritePage />
+          </Route>
+          <Route path="/myposts">
+            <MyPosts />
           </Route>
         </Switch>
       </Router>

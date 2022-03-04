@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -9,9 +10,25 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
 import { Badge } from "react-bootstrap";
-export default function Post({ post }) {
+import axios from "axios";
+export default function Post({ post, isLiked }) {
   const { title, description, updatedAt, _id } = post;
   const timestamp = new Date(updatedAt).toDateString();
+  const [liked, setLiked] = useState(isLiked);
+  const handleClick = async () => {
+    setLiked(!liked);
+    if (liked === false) {
+      await axios.put("http://localhost:5000/api/user/updatelikedposts/", {
+        title: title,
+        username: "monkey1",
+      });
+    } else {
+      await axios.post("http://localhost:5000/api/user/deleteunlikedposts/", {
+        title: title,
+        username: "monkey1",
+      });
+    }
+  };
   return (
     <Card
       sx={{ minWidth: 345 }}
@@ -30,8 +47,12 @@ export default function Post({ post }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton aria-label="add to favorites" onClick={handleClick}>
+          <FavoriteIcon
+            style={{
+              color: liked === true ? "red" : "",
+            }}
+          />
         </IconButton>
         <Link to={`post/${_id}`}>
           <Badge style={{ cursor: "pointer" }}>Read More</Badge>

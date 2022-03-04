@@ -1,11 +1,19 @@
 import { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import "./homePage.css";
-import { useLocation } from "react-router-dom";
+import { useHistory,useLocation } from "react-router-dom";
 import AllPosts from "../AllPosts";
 export default function HomePage() {
   const [posts, setPosts] = useState([{ title: "Not found" }]);
   const { search } = useLocation();
- 
+  const history=useHistory()
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await axios.get("http://localhost:5000/api/post/allposts/");
+      setPosts(res.data);
+    };
+    fetchPosts();
+  }, [history]);
   return (
     <>
       <div className="header">
@@ -20,7 +28,7 @@ export default function HomePage() {
         />
       </div>
       <div className="home">
-        {/* <AllPosts posts={posts} /> */}
+        <AllPosts posts={posts} />
       </div>
     </>
   );
