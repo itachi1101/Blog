@@ -23,14 +23,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    liked: [
-      {
-        title: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
+
+    liked: [],
   },
   { timestamps: true }
 );

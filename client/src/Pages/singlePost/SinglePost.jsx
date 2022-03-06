@@ -16,7 +16,7 @@ export default function SinglePost() {
   const [desc, setDesc] = useState("");
   const [post, setPost] = useState([]);
   const [updateMode, setUpdateMode] = useState(false);
-  const user = useContext(Context);
+  const { user } = useContext(Context);
   useEffect(() => {
     const getPost = async () => {
       const res = await axios.get("http://localhost:5000/api/post/" + path);
@@ -35,7 +35,7 @@ export default function SinglePost() {
   const handleUpdate = async () => {
     try {
       await axios.put(`http://localhost:5000/api/post/${path}`, {
-        username: user.user.user.username,
+        username: user.user.username,
         title,
         description: desc,
       });
@@ -81,9 +81,9 @@ export default function SinglePost() {
           component="div"
           style={{ width: "100%", textAlign: "right", color: "blue" }}
         >
-          Author: {post.username}
+          Author: {post.author}
         </Typography>
-        {updateMode ? (
+        {user.user.username === post.author && updateMode === true ? (
           <>
             <textarea
               className="singlePostDescInput"
@@ -118,7 +118,7 @@ export default function SinglePost() {
         )}
       </CardContent>
       <CardActions>
-        {user != null && updateMode === false ? (
+        {user.user.username===post.author && updateMode === false ? (
           <Badge
             bg="success"
             style={{ cursor: "pointer", fontSize: "1.3rem" }}
@@ -129,7 +129,7 @@ export default function SinglePost() {
         ) : (
           ""
         )}
-        {user != null && updateMode === false ? (
+        {user.user.username===post.author && updateMode === false ? (
           <Badge
             bg="danger"
             style={{ cursor: "pointer", fontSize: "1.3rem" }}

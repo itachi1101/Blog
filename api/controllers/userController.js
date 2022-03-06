@@ -4,7 +4,8 @@ module.exports.addLikedPosts = async (req, res) => {
     const { username, title } = req.body;
     const user = await User.findOne({ username: username });
     if (user) {
-      user.liked = user.liked.concat({ title });
+      const temp = user.liked.concat([title]);
+      user.liked = [...new Set(temp)];
       await user.save();
       res.status(201).json({
         data: user._doc,
@@ -37,8 +38,8 @@ module.exports.deleteLikedPosts = async (req, res) => {
     const { username, title } = req.body;
     const user = await User.findOne({ username: username });
     if (user) {
-      const newLikedArray = user.liked.filter((post) => {
-        return post.title != title;
+      const newLikedArray = user.liked.filter((value, index, arr) => {
+        return value != title;
       });
       user.liked = newLikedArray;
       await user.save();

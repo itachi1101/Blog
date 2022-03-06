@@ -6,26 +6,22 @@ import { Context } from "../context/Context";
 export default function AllPosts({ posts }) {
   const [likedarray, setLikedArray] = useState([]);
   const history = useHistory();
-  const user = useContext(Context);
-  let temp = [];
+  const { user } = useContext(Context);
   useEffect(() => {
     const fetchLikedPosts = async () => {
       try {
-        const data = await axios.post(
+        const result = await axios.post(
           "http://localhost:5000/api/user/getlikedposts/",
-          {
-            username: user.user.user.username,
-          }
+          { username: user.user.username }
         );
-        data.data.data.map((post) => {
-          temp.push(post.title);
-        });
-        setLikedArray(temp);
-      } catch (err) {}
+        
+        setLikedArray(result.data.data)
+      } catch (err) {
+        console.log(err)
+      }
     };
     fetchLikedPosts();
   }, [history]);
-
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
       {posts.map((post) => (
