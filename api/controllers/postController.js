@@ -4,7 +4,6 @@ const multer = require("multer");
 module.exports.create = async (req, res) => {
   try {
     const pic = req.file.buffer;
-    console.log(pic)
     const { title, description, author, isPrivate, category } = req.body;
     const post = await Post.create({
       title,
@@ -12,7 +11,7 @@ module.exports.create = async (req, res) => {
       author,
       isPrivate,
       category,
-      // pic,
+      pic,
     });
     res.status(201).json({
       post: post._doc,

@@ -14,26 +14,30 @@ export default function WritePage() {
   const user = useContext(Context);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newPost = {
-      title: titleRef.current.value,
-      description: descRef.current.value,
-      author: user.user.user.username,
-      isPrivate: isPrivate,
-    };
-    if (file) {
-      const data = new FormData();
-      const filename = Date.now() + file.name;
-      data.append("name", filename);
-      data.append("pic", file);
-      newPost.pic = filename;
-    }
-    console.log(newPost)
+    // const newPost = {
+    //   title: titleRef.current.value,
+    //   description: descRef.current.value,
+    //   author: user.user.user.username,
+    //   isPrivate: isPrivate,
+    // };
+    // if (file) {
+    //   const data = new FormData();
+    //   const filename = Date.now() + file.name;
+    //   data.append("name", filename);
+    //   data.append("pic", file);
+    //   newPost.pic = filename;
+    // }
+    const data = new FormData();
+    data.append("title",titleRef.current.value)
+    data.append("description",descRef.current.value)
+    data.append("author",user.user.user.username)
+    data.append("isPrivate",isPrivate)
+    data.append("pic",file)
     await axios
-      .post("http://localhost:5000/api/post/create/", newPost)
+      .post("http://localhost:5000/api/post/create/", data)
       .then(history.push("/"))
       .catch((err) => console.log(err));
   };
-  console.log(isPrivate);
   return (
     <div className="write" style={{ marginTop: "60px" }}>
       {file ? (
