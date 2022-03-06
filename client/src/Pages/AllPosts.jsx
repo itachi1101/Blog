@@ -14,14 +14,15 @@ export default function AllPosts({ posts }) {
           "http://localhost:5000/api/user/getlikedposts/",
           { username: user.user.username }
         );
-        
-        setLikedArray(result.data.data)
+
+        setLikedArray(result.data.data);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     };
     fetchLikedPosts();
   }, [history]);
+
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
       {posts.map((post) => (

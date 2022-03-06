@@ -20,7 +20,15 @@ export default function WritePage() {
       author: user.user.user.username,
       isPrivate: isPrivate,
     };
-    axios
+    if (file) {
+      const data = new FormData();
+      const filename = Date.now() + file.name;
+      data.append("name", filename);
+      data.append("pic", file);
+      newPost.pic = filename;
+    }
+    console.log(newPost)
+    await axios
       .post("http://localhost:5000/api/post/create/", newPost)
       .then(history.push("/"))
       .catch((err) => console.log(err));

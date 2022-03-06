@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -13,9 +13,10 @@ import { Badge } from "react-bootstrap";
 import axios from "axios";
 import { Context } from "../context/Context";
 export default function Post({ post, isLiked }) {
+  const [Src, setSrc] = useState(post._id);
+  const [liked, setLiked] = useState(isLiked);
   const { title, description, updatedAt, _id } = post;
   const timestamp = new Date(updatedAt).toDateString();
-  const [liked, setLiked] = useState(isLiked);
   const user = React.useContext(Context);
   const handleClick = async () => {
     setLiked(!liked);
@@ -40,7 +41,7 @@ export default function Post({ post, isLiked }) {
       <CardMedia
         component="img"
         height="194"
-        image="https://images.unsplash.com/photo-1644691075420-10e570de79a0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
+        image={`http://localhost:5000/api/post/${Src}/image`}
         alt="Paella dish"
       />
       <CardContent>

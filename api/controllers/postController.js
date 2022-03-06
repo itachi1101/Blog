@@ -3,7 +3,8 @@ const multer = require("multer");
 
 module.exports.create = async (req, res) => {
   try {
-    // const pic = req.file.buffer;
+    const pic = req.file.buffer;
+    console.log(pic)
     const { title, description, author, isPrivate, category } = req.body;
     const post = await Post.create({
       title,
@@ -11,6 +12,7 @@ module.exports.create = async (req, res) => {
       author,
       isPrivate,
       category,
+      // pic,
     });
     res.status(201).json({
       post: post._doc,
@@ -91,5 +93,15 @@ module.exports.updatePostById = async (req, res) => {
     res.status(200).json(updatedPost);
   } catch (err) {
     res.status(500).json(err);
+  }
+};
+
+module.exports.getPostImage = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    res.set('Content-Type','image/jpg')
+    res.send(post.pic)
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };
