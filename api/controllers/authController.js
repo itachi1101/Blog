@@ -2,8 +2,9 @@ const User = require("../models/user");
 
 module.exports.signup = async (req, res) => {
   try {
-    const { username, email, password, pic } = req.body;
-    const user = await User.create({ username, email, password, pic });
+    const pic = req.file.buffer;
+    const { username, email, password } = req.body;
+    const user = await User.create({ username, email, password,pic });
     const token = await user.generateAuthToken();
     res.status(201).json({
       user: user._doc,
@@ -29,3 +30,4 @@ module.exports.login = async (req, res) => {
     res.status(400).json({ error: error.message, login: "Failed" });
   }
 };
+

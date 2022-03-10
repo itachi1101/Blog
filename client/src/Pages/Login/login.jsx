@@ -19,7 +19,8 @@ export default function Login() {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       });
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      console.log(res.data)
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.token });
       history.push("/");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE" });

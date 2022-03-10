@@ -12,6 +12,8 @@ const postSchema = new mongoose.Schema(
     },
     pic: {
       type: Buffer,
+      required: false,
+      
     },
     category: {
       type: String,

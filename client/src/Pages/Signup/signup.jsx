@@ -1,22 +1,25 @@
 import "./signup.styles.scss";
 import SignupImg from "../../Images/Signup.gif";
 import axios from "axios";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 export default function Signup() {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const history = useHistory();
+  const [file, setFile] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const data = new FormData();
+    data.append("username", nameRef.current.value);
+    data.append("email", emailRef.current.value);
+    data.append("password", passwordRef.current.value);
+    data.append("pic", file);
+    console.log(data);
     try {
       await axios
-        .post("http://localhost:5000/api/signup", {
-          username: nameRef.current.value,
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
-        })
+        .post("http://localhost:5000/api/signup", data)
         .then(history.push("/login"))
         .catch((err) => console.log(err));
     } catch (err) {}
@@ -54,7 +57,12 @@ export default function Signup() {
             </div>
             <div className="signup-inputWrapper">
               <label>Upload Photo</label>
-              <input type="file" placeholder=".jpg/jpeg" required />
+              <input
+                type="file"
+                placeholder=".jpg/jpeg"
+                onChange={(e) => setFile(e.target.files[0])}
+                required
+              />
             </div>
             <span>
               Creating an account means you're okay with our Terms of Service

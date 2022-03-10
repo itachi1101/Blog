@@ -1,8 +1,10 @@
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 module.exports.addLikedPosts = async (req, res) => {
   try {
-    const { username, title } = req.body;
-    const user = await User.findOne({ username: username });
+    const id = req.user._id.toHexString();
+    const { title } = req.body;
+    const user = await User.findById(id);
     if (user) {
       const temp = user.liked.concat([title]);
       user.liked = [...new Set(temp)];
@@ -22,8 +24,8 @@ module.exports.addLikedPosts = async (req, res) => {
 };
 module.exports.getLikedPosts = async (req, res) => {
   try {
-    const { username } = req.body;
-    const user = await User.findOne({ username: username });
+    const id = req.user._id.toHexString();
+    const user = await User.findById(id);
     if (user) {
       res.status(200).json({ data: user.liked });
     } else {
@@ -35,8 +37,9 @@ module.exports.getLikedPosts = async (req, res) => {
 };
 module.exports.deleteLikedPosts = async (req, res) => {
   try {
-    const { username, title } = req.body;
-    const user = await User.findOne({ username: username });
+    const id = req.user._id.toHexString();
+    const { title } = req.body;
+    const user = await User.findById(id);
     if (user) {
       const newLikedArray = user.liked.filter((value, index, arr) => {
         return value != title;
@@ -49,5 +52,54 @@ module.exports.deleteLikedPosts = async (req, res) => {
     }
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+};
+
+module.exports.getProfileImage = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.set("Content-Type", "image/jpg");
+    res.send(user.pic);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports.updateProfile = async (req, res) => {
+  try {
+    const id = req.user._id.toHexString();
+    if (req.body.password) {
+      req.body.password = await bcrypt.hash(req.body.password, 8);
+      const updatedUser = await User.findByIdAndUpdate(id, {
+        $set: req.body,
+      });
+      if (updatedUser) {
+        res.status(200).json({ data: updatedUser });
+      } else {
+        res.status(400).json({ error: error });
+      }
+    } else {
+      const updatedUser = await User.findByIdAndUpdate(id, {
+        username: req.body.username,
+      });
+      if (updatedUser) {
+        res.status(200).json({ data: updatedUser });
+      } else {
+        res.status(400).json({ error: error });
+      }
+    }
+  } catch (err) {
+    res.status(401).json({ error: err.message });
+  }
+};
+
+module.exports.getUser = async (req, res) => {
+  try {
+    const id = req.user._id.toHexString();
+    const username = req.user.username;
+    const email = req.user.email;
+    res.status(200).json({ id, username, email });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };

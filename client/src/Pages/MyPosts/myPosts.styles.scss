@@ -1,0 +1,22 @@
+.navbar {
+  width: 100vw;
+  background-color: whitesmoke;
+  height: 100px;
+  ul {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+    list-style-type: none;
+    align-items: center;
+    height: 100%;
+    align-items: center;
+    li {
+      font-weight: 600;
+      letter-spacing: 1.2px;
+    }
+    li:hover{
+      color:lightcoral;
+    }
+  }
+}

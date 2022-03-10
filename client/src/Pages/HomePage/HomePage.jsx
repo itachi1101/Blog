@@ -1,19 +1,24 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./homePage.css";
-import { useHistory,useLocation } from "react-router-dom";
 import AllPosts from "../AllPosts";
+import Sidebar from "../../Components/Sidebar/Sidebar";
+import "./homePage.css";
+import { Context } from "../../context/Context";
 export default function HomePage() {
-  const [posts, setPosts] = useState([{ title: "Not found" }]);
-  const { search } = useLocation();
-  const history=useHistory()
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const {token}=useContext(Context)
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       const res = await axios.get("http://localhost:5000/api/post/allposts/");
       setPosts(res.data);
+      setLoading(false);
     };
     fetchPosts();
-  }, [history]);
+  }, [token]);
+
   return (
     <>
       <div className="header">
@@ -28,7 +33,8 @@ export default function HomePage() {
         />
       </div>
       <div className="home">
-        <AllPosts posts={posts} />
+        <AllPosts posts={posts} loading={loading} />
+        <Sidebar/>
       </div>
     </>
   );

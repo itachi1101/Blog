@@ -3,16 +3,20 @@ import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import Post from "./Post";
 import { Context } from "../context/Context";
-export default function AllPosts({ posts }) {
+export default function AllPosts({ posts, loading }) {
   const [likedarray, setLikedArray] = useState([]);
-  const history = useHistory();
-  const { user } = useContext(Context);
+  const { token } = useContext(Context);
   useEffect(() => {
     const fetchLikedPosts = async () => {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
       try {
-        const result = await axios.post(
+        const result = await axios.get(
           "http://localhost:5000/api/user/getlikedposts/",
-          { username: user.user.username }
+          config
         );
 
         setLikedArray(result.data.data);
@@ -21,8 +25,11 @@ export default function AllPosts({ posts }) {
       }
     };
     fetchLikedPosts();
-  }, [history]);
+  }, []);
 
+  if (loading) {
+    return <h2>Loading</h2>;
+  }
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
       {posts.map((post) => (

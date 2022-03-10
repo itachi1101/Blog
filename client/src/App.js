@@ -5,7 +5,7 @@ import Signup from "./Pages/Signup/signup";
 import About from "./Pages/About";
 import WritePage from "./Pages/Write/WritePage";
 import HomePage from "./Pages/HomePage/HomePage";
-import MyPosts from "./Pages/MyPosts";
+import MyPosts from "./Pages/MyPosts/MyPosts";
 import Footer from "./Components/footer/Footer";
 import SinglePost from "./Pages/singlePost/SinglePost";
 import Settings from "./Pages/settings/Settings";
@@ -40,6 +40,7 @@ export default function App() {
             <SinglePost />
           </Route>
         </Switch>
+        <Footer/>
       </Router>
     </>
   );

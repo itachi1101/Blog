@@ -11,30 +11,28 @@ export default function WritePage() {
   const [file, setFile] = useState(null);
   const [isPrivate, setIsPrivate] = useState(false);
   const history = useHistory();
-  const user = useContext(Context);
+  const { token } = useContext(Context);
+  const defaultFileName = "/uploads/defaultPost.jpg";
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const newPost = {
-    //   title: titleRef.current.value,
-    //   description: descRef.current.value,
-    //   author: user.user.user.username,
-    //   isPrivate: isPrivate,
-    // };
-    // if (file) {
-    //   const data = new FormData();
-    //   const filename = Date.now() + file.name;
-    //   data.append("name", filename);
-    //   data.append("pic", file);
-    //   newPost.pic = filename;
-    // }
     const data = new FormData();
-    data.append("title",titleRef.current.value)
-    data.append("description",descRef.current.value)
-    data.append("author",user.user.user.username)
-    data.append("isPrivate",isPrivate)
-    data.append("pic",file)
+    data.append("title", titleRef.current.value);
+    data.append("description", descRef.current.value);
+    data.append("isPrivate", isPrivate);
+    if (file) {
+      data.append("pic", file);
+    }
+    else {
+      data.append("pic",defaultFileName)
+    }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     await axios
-      .post("http://localhost:5000/api/post/create/", data)
+      .post("http://localhost:5000/api/post/create/", data, config)
       .then(history.push("/"))
       .catch((err) => console.log(err));
   };
@@ -66,6 +64,7 @@ export default function WritePage() {
             id="fileInput"
             style={{ display: "none" }}
             onChange={(e) => setFile(e.target.files[0])}
+  
           />
           <input
             type="text"

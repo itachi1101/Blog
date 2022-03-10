@@ -3,7 +3,7 @@ export const LoginStart = (userCredentials) => ({
 });
 export const LoginSuccess = (user) => ({
   type: "LOGIN_SUCCESS",
-  playload: user,
+  playload: user.token,
 });
 export const LoginFailure = () => ({
   type: "LOGIN_FAILURE",

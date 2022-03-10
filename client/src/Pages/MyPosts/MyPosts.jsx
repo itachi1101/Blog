@@ -1,22 +1,31 @@
 import { useContext, useEffect, useState } from "react";
-import "../Pages/HomePage/homePage.css";
-import AllPosts from "./AllPosts";
+import AllPosts from "../AllPosts";
 import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
-import { Context } from "../context/Context";
+import { Context } from "../../context/Context";
+import "./myPosts.styles.scss";
+import Sidebar from "../../Components/Sidebar/Sidebar";
+
 export default function MyPosts() {
   const [posts, setPosts] = useState([]);
-  const user = useContext(Context);
+  const { token } = useContext(Context);
   const history = useHistory();
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
     const fetchPosts = async () => {
-      const res = await axios.post(`http://localhost:5000/api/post/myposts/`, {
-        author: user.user.user.username,
-      });
-      setPosts(res.data.data);
+      const {data} = await axios.get(
+        `http://localhost:5000/api/post/myposts/`,
+        config
+      );
+      setPosts(data.data);
     };
     fetchPosts();
   }, [history]);
+ 
   return (
     <>
       <div className="header">
@@ -30,9 +39,9 @@ export default function MyPosts() {
           alt=""
         />
       </div>
-
       <div className="home">
         <AllPosts posts={posts} />
+        <Sidebar/>
       </div>
     </>
   );

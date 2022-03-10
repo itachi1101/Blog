@@ -1,16 +1,15 @@
 const Post = require("../models/post");
-const multer = require("multer");
-
 module.exports.create = async (req, res) => {
   try {
-    const pic = req.file.buffer;
-    const { title, description, author, isPrivate, category } = req.body;
+    const author = req.user._id.toHexString();
+    const defaultFileName = "/uploads/defaultPost.jpg";
+    const pic = req.file?.buffer || defaultFileName;
+    const { title, description, isPrivate } = req.body;
     const post = await Post.create({
       title,
       description,
       author,
       isPrivate,
-      category,
       pic,
     });
     res.status(201).json({
@@ -27,7 +26,7 @@ module.exports.create = async (req, res) => {
 
 module.exports.searchUserPosts = async (req, res) => {
   try {
-    const { author } = req.body;
+    const author = req.user._id.toHexString();
     const posts = await Post.find({ author: author });
     if (posts) {
       res.status(200).json({
@@ -98,8 +97,8 @@ module.exports.updatePostById = async (req, res) => {
 module.exports.getPostImage = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    res.set('Content-Type','image/jpg')
-    res.send(post.pic)
+    res.set("Content-Type", "image/jpg");
+    res.send(post.pic);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

@@ -12,15 +12,16 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Context } from "../context/Context";
-import { useContext } from "react";
-const pages = ["My Posts", "write", "About"];
-const settings = ["Profile", "Logout"];
-
+import { useEffect, useContext, useState } from "react";
+import axios from "axios";
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const { token, dispatch } = useContext(Context);
+  const [currentUser, setCurrentUser] = useState(null);
+  const history=useHistory()
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -35,11 +36,27 @@ const Header = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const { user, dispatch } = useContext(Context);
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
+    
     handleCloseUserMenu();
+    history.push('/')
   };
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const fetchUser = async () => {
+      const {data} = await axios.get(
+        "http://localhost:5000/api/user/getUser",
+        config
+      );
+      setCurrentUser(data.id);
+    };
+    fetchUser();
+  }, [token]);
   return (
     <AppBar position="fixed" style={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
@@ -85,7 +102,7 @@ const Header = () => {
               }}
             >
               <Link
-                to={user ? `/myposts` : "/login"}
+                to={currentUser ? `/myposts` : "/login"}
                 style={{ color: "black", textDecoration: "none" }}
               >
                 <MenuItem key="myposts" onClick={handleCloseNavMenu}>
@@ -93,7 +110,7 @@ const Header = () => {
                 </MenuItem>
               </Link>
               <Link
-                to={user === null ? `/login` : "/write"}
+                to={currentUser === null ? `/login` : "/write"}
                 style={{ color: "black", textDecoration: "none" }}
               >
                 <MenuItem key="write" onClick={handleCloseNavMenu}>
@@ -125,7 +142,7 @@ const Header = () => {
             style={{ justifyContent: "center" }}
           >
             <Link
-              to={user ? `/myposts` : "/login"}
+              to={currentUser ? `/myposts` : "/login"}
               style={{ color: "black", textDecoration: "none" }}
             >
               <MenuItem key="myposts" onClick={handleCloseNavMenu}>
@@ -135,7 +152,7 @@ const Header = () => {
               </MenuItem>
             </Link>
             <Link
-              to={user ? `/write` : "/login"}
+              to={currentUser ? `/write` : "/login"}
               style={{ color: "black", textDecoration: "none" }}
             >
               <MenuItem key="write" onClick={handleCloseNavMenu}>
@@ -155,13 +172,17 @@ const Header = () => {
               </MenuItem>
             </Link>
           </Box>
-          {user != null ? (
+          {currentUser != null ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt="Remy Sharp"
-                    src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
+                    src={
+                      currentUser
+                        ? `http://localhost:5000/api/user/${currentUser}/avatar`
+                        : ""
+                    }
                   />
                 </IconButton>
               </Tooltip>
@@ -192,7 +213,6 @@ const Header = () => {
                 <MenuItem key={"logout"} onClick={handleLogout}>
                   <Typography textAlign="center">LOGOUT</Typography>
                 </MenuItem>
-             
               </Menu>
             </Box>
           ) : (

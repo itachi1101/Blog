@@ -20,8 +20,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     pic: {
-      type: String,
-      default: "",
+      type: Buffer,
     },
 
     liked: [],

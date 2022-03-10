@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -17,31 +17,47 @@ export default function Post({ post, isLiked }) {
   const [liked, setLiked] = useState(isLiked);
   const { title, description, updatedAt, _id } = post;
   const timestamp = new Date(updatedAt).toDateString();
-  const user = React.useContext(Context);
+  const { token } = React.useContext(Context);
   const handleClick = async () => {
     setLiked(!liked);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
     if (liked === false) {
-      await axios.put("http://localhost:5000/api/user/updatelikedposts/", {
-        title: title,
-        username: user.user.user.username,
-      });
+      await axios.put(
+        "http://localhost:5000/api/user/updatelikedposts/",
+        {
+          title: title,
+        },
+        config
+      );
     } else {
-      await axios.post("http://localhost:5000/api/user/deleteunlikedposts/", {
-        title: title,
-        username: user.user.user.username,
-      });
+      await axios.post(
+        "http://localhost:5000/api/user/deleteunlikedposts/",
+        {
+          title: title,
+        },
+        config
+      );
     }
   };
   return (
     <Card
-      sx={{ minWidth: 345 }}
+      sx={{ maxWidth: 300, }}
       style={{ marginTop: "20px", marginLeft: "20px" }}
     >
       <CardHeader title={title} subheader={`Updated at: ${timestamp}`} />
       <CardMedia
         component="img"
         height="194"
-        image={`http://localhost:5000/api/post/${Src}/image`}
+        width="300"
+        image={
+          Src
+            ? `http://localhost:5000/api/post/${Src}/image`
+            : "https://images.unsplash.com/photo-1545239351-ef35f43d514b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+        }
         alt="Paella dish"
       />
       <CardContent>

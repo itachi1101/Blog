@@ -6,6 +6,7 @@
 .settingsWrapper {
   flex: 9;
   padding: 20px;
+  margin-left:60px;
 }
 
 .settingsTitle {
@@ -38,9 +39,9 @@
 }
 
 .settingsPP > img {
-  width: 70px;
-  height: 70px;
-  border-radius: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
   object-fit: cover;
 }
 

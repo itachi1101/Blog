@@ -1,54 +1,76 @@
 import "./settings.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { FaPlusCircle } from "react-icons/fa";
 import { Context } from "../../context/Context";
 import axios from "axios";
 
 export default function Settings() {
   const [file, setFile] = useState(null);
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
-  const { user } = useContext(Context);
+  const [currentUser, setCurrentUser] = useState(null);
+  const { token ,dispatch} = useContext(Context);
+  const history = useHistory();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    await axios
+      .post(
+        "http://localhost:5000/api/user/updateUser",
+        { username: username, password: password },
+        config
+      )
+      .then(()=>{dispatch({type:"LOGOUT"});history.push("/")})
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const getUser = async () => {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:5000/api/user/getUser",
+          config
+        );
+        setCurrentUser(data);
+      } catch (err) {
+        console.log({ error: err.message });
+      }
+    };
+    getUser();
+  }, [token]);
   return (
-    <div className="settings">
+    <div className="settings" style={{ marginTop: "60px" }}>
       <div className="settingsWrapper">
         <div className="settingsTitle">
           <span className="settingsUpdateTitle">Update Your Account</span>
-          <span className="settingsDeleteTitle">Delete Account</span>
         </div>
-        <form className="settingsForm">
-          <label>Profile Picture</label>
-          <div className="settingsPP">
-            <img
-              // src={file ? URL.createObjectURL(file) : PF + user.profilePic}
-              alt=""
-            />
-            <label htmlFor="fileInput">
-              <i className="settingsPPIcon far fa-user-circle"></i>
-            </label>
-            <input
-              type="file"
-              id="fileInput"
-              style={{ display: "none" }}
-              onChange={(e) => setFile(e.target.files[0])}
-            />
-          </div>
-          <label>Username</label>
+        <form className="settingsForm" type="submit" onSubmit={handleSubmit}>
+          <label>Enter New Username</label>
           <input
             type="text"
-            placeholder={user.username}
+            placeholder={currentUser?.username || "hello"}
             onChange={(e) => setUsername(e.target.value)}
           />
           <label>Email</label>
           <input
             type="email"
-            placeholder={user.email}
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder={currentUser?.email || "hello"}
+            disabled
           />
-          <label>Password</label>
+          <label>Enter New Password</label>
           <input
             type="password"
+            placeholder="New Password"
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="settingsSubmit" type="submit">
