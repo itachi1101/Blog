@@ -61,10 +61,15 @@ module.exports.searchUserPosts = async (req, res) => {
 
 module.exports.getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find({ isPrivate: false });
+    const PAGE_SIZE = 6;
+    const page = parseInt(req.query.page || "0");
+    const total = await Post.countDocuments({ isPrivate: false });
+    const posts = await Post.find({ isPrivate: false })
+      .limit(PAGE_SIZE)
+      .skip(PAGE_SIZE * page);
     if (!posts) res.status(404).json({ posts: "no posts found" });
     else {
-      res.status(200).json(posts);
+      res.status(200).json({ totalPages: Math.ceil(total / PAGE_SIZE), posts });
     }
   } catch (err) {
     res.status(400).json({ error: err.message });
