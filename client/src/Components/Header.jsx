@@ -21,7 +21,22 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { token, dispatch } = useContext(Context);
   const [currentUser, setCurrentUser] = useState(null);
-  const history=useHistory()
+  const history = useHistory();
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const fetchUser = async () => {
+      const { data } = await axios.get(
+        "http://localhost:5000/api/user/getUser",
+        config
+      );
+      setCurrentUser(data);
+    };
+    fetchUser();
+  }, [token]);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -38,25 +53,11 @@ const Header = () => {
   };
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
-    
+    localStorage.removeItem("authToken");
     handleCloseUserMenu();
-    history.push('/')
+    history.push("/");
+    window.location.reload();
   };
-  useEffect(() => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const fetchUser = async () => {
-      const {data} = await axios.get(
-        "http://localhost:5000/api/user/getUser",
-        config
-      );
-      setCurrentUser(data.id);
-    };
-    fetchUser();
-  }, [token]);
   return (
     <AppBar position="fixed" style={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
@@ -67,7 +68,14 @@ const Header = () => {
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+            <Link
+              to="/"
+              style={{
+                color: "black",
+                textDecoration: "none",
+                FontFamily: "Valera Round",
+              }}
+            >
               THE BLOG
             </Link>
           </Typography>
@@ -133,7 +141,14 @@ const Header = () => {
             component="div"
             sx={{ flexGrow: 2, display: { xs: "flex", md: "none" } }}
           >
-            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+            <Link
+              to="/"
+              style={{
+                color: "black",
+                textDecoration: "none",
+                fontFamily: "Varela Round",
+              }}
+            >
               THE BLOG
             </Link>
           </Typography>
@@ -151,6 +166,7 @@ const Header = () => {
                 </Typography>
               </MenuItem>
             </Link>
+
             <Link
               to={currentUser ? `/write` : "/login"}
               style={{ color: "black", textDecoration: "none" }}
@@ -172,6 +188,22 @@ const Header = () => {
               </MenuItem>
             </Link>
           </Box>
+
+          <Box>
+            {currentUser !== null ? (
+              <span
+                style={{
+                  color: "grey",
+                  fontFamily: "Sansita Swashed",
+                  marginRight: "20px",
+                }}
+              >
+                {`Welcome back, ${currentUser.username}`}
+              </span>
+            ) : (
+              ""
+            )}
+          </Box>
           {currentUser != null ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
@@ -180,7 +212,7 @@ const Header = () => {
                     alt="Remy Sharp"
                     src={
                       currentUser
-                        ? `http://localhost:5000/api/user/${currentUser}/avatar`
+                        ? `http://localhost:5000/api/user/${currentUser.id}/avatar`
                         : ""
                     }
                   />

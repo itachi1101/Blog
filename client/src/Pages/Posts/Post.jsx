@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState} from "react";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -11,13 +11,15 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 import axios from "axios";
-import { Context } from "../context/Context";
+import DefaultImage from "../../Photo/defaultPost.jpg"
+import { Context } from "../../context/Context";
+import "./post.styles.css";
 export default function Post({ post, isLiked }) {
-  const [Src, setSrc] = useState(post._id);
   const [liked, setLiked] = useState(isLiked);
+  const [Src, setSrc] = useState(null);
   const { title, description, updatedAt, _id } = post;
-  const timestamp = new Date(updatedAt).toDateString();
   const { token } = React.useContext(Context);
+  const timestamp = new Date(updatedAt).toDateString();
   const handleClick = async () => {
     setLiked(!liked);
     const config = {
@@ -43,10 +45,18 @@ export default function Post({ post, isLiked }) {
       );
     }
   };
+  React.useEffect(() => {
+    setLiked(isLiked);
+    if (post.pic) {
+      setSrc(post._id);
+    }
+  }, [isLiked]);
+
   return (
     <Card
-      sx={{ maxWidth: 300, }}
+      sx={{ maxWidth: 300, minWidth: 300, maxHeight: "400px" }}
       style={{ marginTop: "20px", marginLeft: "20px" }}
+      className="hover"
     >
       <CardHeader title={title} subheader={`Updated at: ${timestamp}`} />
       <CardMedia
@@ -54,15 +64,13 @@ export default function Post({ post, isLiked }) {
         height="194"
         width="300"
         image={
-          Src
-            ? `http://localhost:5000/api/post/${Src}/image`
-            : "https://images.unsplash.com/photo-1545239351-ef35f43d514b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+          Src ? `http://localhost:5000/api/post/${Src}/image` : DefaultImage
         }
         alt="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {description}
+          {description.substring(0, 40)} ......
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

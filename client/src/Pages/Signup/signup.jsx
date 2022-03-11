@@ -16,12 +16,12 @@ export default function Signup() {
     data.append("email", emailRef.current.value);
     data.append("password", passwordRef.current.value);
     data.append("pic", file);
-    console.log(data);
+
     try {
       await axios
-        .post("http://localhost:5000/api/signup", data)
+        .post("http://localhost:5000/api/signup/", data)
         .then(history.push("/login"))
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.message));
     } catch (err) {}
   };
   return (

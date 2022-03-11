@@ -4,7 +4,6 @@ export default function Footer() {
   return (
     <div className="footer">
       <hr></hr>
-      <hr></hr>
       <div className="footerContent">Made by Aviral</div>
       <div
         style={{

@@ -7,6 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Badge } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { Context } from "../../context/Context";
 export default function SinglePost() {
   const location = useLocation();
@@ -18,6 +19,7 @@ export default function SinglePost() {
   const [currentUser, setCurrentUser] = useState(null);
   const [updateMode, setUpdateMode] = useState(false);
   const { token } = useContext(Context);
+  const history = useHistory();
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -61,7 +63,7 @@ export default function SinglePost() {
         config
       );
       setUpdateMode(false);
-      window.location.replace("/");
+      history.push("/");
     } catch (err) {}
   };
   return (
@@ -97,7 +99,14 @@ export default function SinglePost() {
           marginBottom: "50px",
         }}
       >
-        <Typography gutterBottom variant="h1" component="div">
+        <Typography
+          style={{
+            fontFamily: "Varela",
+          }}
+          gutterBottom
+          variant="h1"
+          component="div"
+        >
           {title}
         </Typography>
 
@@ -129,7 +138,12 @@ export default function SinglePost() {
           <Typography
             variant="span"
             color="text.secondary"
-            style={{ width: "100%", fontSize: "1.55rem", marginTop: "40px" }}
+            style={{
+              width: "100%",
+              fontSize: "1.55rem",
+              marginTop: "40px",
+              fontFamily: "Sansita Swashed",
+            }}
           >
             {desc}
           </Typography>

@@ -19,15 +19,14 @@ export default function About() {
         <Card.Body>
           I am currently pursuing my under graduation in Information Technology
           Engineering from Maharaja Agrasen Institute of Technology in New
-          Delhi. I mostly engage in Backend Development with satisfactory
-          knowledge of frontend frameworks. I am a keen learner ready to learn
-          new and exciting technologies.
+          Delhi. I am a keen learner ready to learn new and exciting
+          technologies.
         </Card.Body>
         <Card.Footer>
           GitHub Code
           <span style={{ marginLeft: "4px" }}>
             <Link
-              to={{ pathname: "https://github.com/itachi1101/Blog-Website" }}
+              to={{ pathname: "https://github.com/itachi1101/Blog" }}
               target="_blank"
             >
               Link
@@ -55,7 +54,7 @@ export default function About() {
               <LinkedInIcon style={{ fontSize: "40px" }} />
             </Link>
             <Link
-              path={{ pathname: "https://github.com/itachi1101" }}
+              to={{ pathname: "https://github.com/itachi1101" }}
               target="_blank"
               style={{ marginLeft: "30px", textDecoration: "none" }}
             >
@@ -73,7 +72,7 @@ export default function About() {
             }}
           >
             <Link
-              to={{ pathname: "https://leetcode.com/satoru_gojo" }}
+              to={{ pathname: "https://leetcode.com/_helios" }}
               target="_blank"
               style={{ marginLeft: "30px", textDecoration: "none" }}
             >

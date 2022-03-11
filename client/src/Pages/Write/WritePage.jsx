@@ -21,9 +21,8 @@ export default function WritePage() {
     data.append("isPrivate", isPrivate);
     if (file) {
       data.append("pic", file);
-    }
-    else {
-      data.append("pic",defaultFileName)
+    } else {
+      data.append("pic", defaultFileName);
     }
     const config = {
       headers: {
@@ -33,7 +32,10 @@ export default function WritePage() {
 
     await axios
       .post("http://localhost:5000/api/post/create/", data, config)
-      .then(history.push("/"))
+      .then(() => {
+        history.push("/");
+        window.location.reload();
+      })
       .catch((err) => console.log(err));
   };
   return (
@@ -64,7 +66,6 @@ export default function WritePage() {
             id="fileInput"
             style={{ display: "none" }}
             onChange={(e) => setFile(e.target.files[0])}
-  
           />
           <input
             type="text"

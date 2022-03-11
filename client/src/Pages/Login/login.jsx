@@ -19,7 +19,8 @@ export default function Login() {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       });
-      console.log(res.data)
+
+      localStorage.setItem("authToken", JSON.stringify(res.data.token));
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.token });
       history.push("/");
     } catch (err) {

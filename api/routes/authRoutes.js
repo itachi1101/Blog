@@ -22,7 +22,6 @@ router.post(
     res.status(400).json({ error: error.message });
   }
 );
-// router.post("/api/signup/",authController.signup)
 router.post("/api/login/", authController.login);
 
 module.exports = router;

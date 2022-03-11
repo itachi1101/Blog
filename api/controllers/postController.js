@@ -2,20 +2,33 @@ const Post = require("../models/post");
 module.exports.create = async (req, res) => {
   try {
     const author = req.user._id.toHexString();
-    const defaultFileName = "/uploads/defaultPost.jpg";
-    const pic = req.file?.buffer || defaultFileName;
-    const { title, description, isPrivate } = req.body;
-    const post = await Post.create({
-      title,
-      description,
-      author,
-      isPrivate,
-      pic,
-    });
-    res.status(201).json({
-      post: post._doc,
-      PostCreated: "successful",
-    });
+    if (req.file) {
+      const pic = req.file.buffer;
+      const { title, description, isPrivate } = req.body;
+      const post = await Post.create({
+        title,
+        description,
+        author,
+        isPrivate,
+        pic,
+      });
+      res.status(201).json({
+        post: post._doc,
+        PostCreated: "successful",
+      });
+    } else {
+      const { title, description, isPrivate } = req.body;
+      const post = await Post.create({
+        title,
+        description,
+        author,
+        isPrivate,
+      });
+      res.status(201).json({
+        post: post._doc,
+        PostCreated: "successful",
+      });
+    }
   } catch (err) {
     res.status(400).json({
       error: err.message,

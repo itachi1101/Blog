@@ -1,6 +1,7 @@
 const User = require("../models/user");
 
 module.exports.signup = async (req, res) => {
+  console.log(req.body)
   try {
     const pic = req.file.buffer;
     const { username, email, password } = req.body;

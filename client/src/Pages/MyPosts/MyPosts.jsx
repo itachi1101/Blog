@@ -5,6 +5,7 @@ import axios from "axios";
 import { Context } from "../../context/Context";
 import "./myPosts.styles.scss";
 import Sidebar from "../../Components/Sidebar/Sidebar";
+import NotPresent from "../NotPresent/NotPresent";
 
 export default function MyPosts() {
   const [posts, setPosts] = useState([]);
@@ -17,7 +18,7 @@ export default function MyPosts() {
       },
     };
     const fetchPosts = async () => {
-      const {data} = await axios.get(
+      const { data } = await axios.get(
         `http://localhost:5000/api/post/myposts/`,
         config
       );
@@ -25,12 +26,12 @@ export default function MyPosts() {
     };
     fetchPosts();
   }, [history]);
- 
+
   return (
     <>
-      <div className="header">
-        <div className="headerTitles">
-          <span className="headerTitleSm">Personal</span>
+      <div className="header fontPersonal">
+        <div className="headerTitles fontPersonal">
+          <span className="headerTitleSm smallPersonal">Personal</span>
           <span className="headerTitleLg">Blogs</span>
         </div>
         <img
@@ -40,8 +41,13 @@ export default function MyPosts() {
         />
       </div>
       <div className="home">
-        <AllPosts posts={posts} />
-        <Sidebar/>
+        {posts.length === 0 ? (
+          <NotPresent />
+        ) : (
+          <>
+            <AllPosts posts={posts} />
+          </>
+        )}
       </div>
     </>
   );
