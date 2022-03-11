@@ -114,7 +114,9 @@ const Header = () => {
                 style={{ color: "black", textDecoration: "none" }}
               >
                 <MenuItem key="myposts" onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">My Posts</Typography>
+                  <Typography style={{ color: "grey" }} textAlign="center">
+                    My Posts
+                  </Typography>
                 </MenuItem>
               </Link>
               <Link
@@ -122,7 +124,9 @@ const Header = () => {
                 style={{ color: "black", textDecoration: "none" }}
               >
                 <MenuItem key="write" onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">Write</Typography>
+                  <Typography style={{ color: "grey" }} textAlign="center">
+                    Write
+                  </Typography>
                 </MenuItem>
               </Link>
               <Link
@@ -130,7 +134,9 @@ const Header = () => {
                 style={{ color: "black", textDecoration: "none" }}
               >
                 <MenuItem key="about" onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">About</Typography>
+                  <Typography style={{ color: "grey" }} textAlign="center">
+                    About
+                  </Typography>
                 </MenuItem>
               </Link>
             </Menu>
@@ -161,7 +167,11 @@ const Header = () => {
               style={{ color: "black", textDecoration: "none" }}
             >
               <MenuItem key="myposts" onClick={handleCloseNavMenu}>
-                <Typography variant="h6" textAlign="center">
+                <Typography
+                  style={{ color: "grey",letterSpacing:"1.2px" }}
+                  variant="h6"
+                  textAlign="center"
+                >
                   My Posts
                 </Typography>
               </MenuItem>
@@ -172,7 +182,11 @@ const Header = () => {
               style={{ color: "black", textDecoration: "none" }}
             >
               <MenuItem key="write" onClick={handleCloseNavMenu}>
-                <Typography variant="h6" textAlign="center">
+                <Typography
+                  style={{ color: "grey" ,letterSpacing:"1.2px"}}
+                  variant="h6"
+                  textAlign="center"
+                >
                   Write
                 </Typography>
               </MenuItem>
@@ -182,7 +196,11 @@ const Header = () => {
               style={{ color: "black", textDecoration: "none" }}
             >
               <MenuItem key="about" onClick={handleCloseNavMenu}>
-                <Typography variant="h6" textAlign="center">
+                <Typography
+                  style={{ color: "grey",letterSpacing:"1.2px" }}
+                  variant="h6"
+                  textAlign="center"
+                >
                   About
                 </Typography>
               </MenuItem>
