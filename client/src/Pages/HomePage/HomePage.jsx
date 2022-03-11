@@ -5,10 +5,11 @@ import AllPosts from "../AllPosts";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import "./homePage.css";
 import { Context } from "../../context/Context";
+import background from "../../Photo/background.jpg";
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const {token}=useContext(Context)
+  const { token } = useContext(Context);
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
@@ -22,19 +23,15 @@ export default function HomePage() {
   return (
     <>
       <div className="header">
+        <img className="headerImg" src={background} alt="" />
         <div className="headerTitles">
           <span className="headerTitleSm">WRITE YOUR THOUGHTS</span>
           <span className="headerTitleLg">The Blog</span>
         </div>
-        <img
-          className="headerImg"
-          src="https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-          alt=""
-        />
       </div>
       <div className="home">
         <AllPosts posts={posts} loading={loading} />
-        <Sidebar/>
+        <Sidebar />
       </div>
     </>
   );
