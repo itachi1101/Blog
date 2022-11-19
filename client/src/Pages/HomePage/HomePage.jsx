@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./homePage.css";
-import AllPosts from "../AllPosts";
-import Sidebar from "../../Components/Sidebar/Sidebar";
+import AllPosts from "../AllPost/AllPosts";
 import "./homePage.css";
 import { Context } from "../../context/Context";
 import background from "../../Photo/background.jpg";
 import { Button } from "@mui/material";
+import Typewriter from 'typewriter-effect';
+
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -39,15 +40,20 @@ export default function HomePage() {
         <img className="headerImg" src={background} alt="" />
         <div className="headerTitles">
           <span className="headerTitleSm">WRITE YOUR THOUGHTS</span>
-          <span className="headerTitleLg">The Blog</span>
+          <span className="headerTitleLg">
+
+            <Typewriter
+              options={{
+                strings: ['The Blog'],
+                autoStart: true,
+                loop: true,
+              }}
+            />
+          </span>
         </div>
       </div>
-      
-      <div className="home">
-        <AllPosts style={{width:"70%"}} posts={posts} loading={loading} />
-        <Sidebar />
-      </div>
-      <div className="bottomScroll">
+      <AllPosts posts={posts} loading={loading} />
+      <div className="pagination-container">
         <Button variant="outlined" onClick={gotoPrevious}>
           Previous
         </Button>

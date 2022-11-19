@@ -1,7 +1,6 @@
 import "./settings.css";
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { FaPlusCircle } from "react-icons/fa";
 import { Context } from "../../context/Context";
 import axios from "axios";
 

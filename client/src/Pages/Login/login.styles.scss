@@ -1,24 +1,29 @@
 body {
   overflow-x: hidden;
 }
+
 .login-Container {
   width: 100vw;
   display: flex;
-  & .login-Left {
+
+  .login-Left {
     width: 40%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+
     img {
       height: 70%;
     }
   }
-  & .login-Right {
+
+  .login-Right {
     margin-left: 7rem;
     width: 450px;
     height: 750px;
-    & .login-rightWrapper {
+
+    .login-rightWrapper {
       -webkit-box-shadow: -2px 2px 12px 7px rgba(176, 176, 176, 1);
       -moz-box-shadow: -2px 2px 12px 7px rgba(176, 176, 176, 1);
       box-shadow: -2px 2px 12px 7px rgba(176, 176, 176, 1);
@@ -27,28 +32,33 @@ body {
       margin-top: 5rem;
       height: 80%;
       padding: 2rem;
+
       span {
         span {
           color: blue;
           cursor: pointer;
         }
       }
+
       h1 {
         text-align: center;
         margin-bottom: 7rem;
         letter-spacing: 2px;
         color: lightcoral;
       }
-      & .login-inputWrapper {
+
+      .login-inputWrapper {
         display: flex;
         flex-direction: column;
         margin-bottom: 2rem;
+
         input {
           padding: 10px;
           background-color: white;
           border-radius: 0.75rem;
           border-width: 1px;
         }
+
         label {
           margin-bottom: 1px;
           margin-left: 5px;
@@ -57,13 +67,15 @@ body {
           letter-spacing: 1.2px;
         }
       }
-      & .login-button-wrapper {
+
+      .login-button-wrapper {
         width: 100%;
         display: flex;
         justify-content: center;
         margin-top: 5rem;
       }
-      & .login-button {
+
+      .login-button {
         padding: 1.3em 2em;
         font-size: 14px;
         text-transform: uppercase;
@@ -79,16 +91,19 @@ body {
         width: 10rem;
         outline: none;
       }
-      & .login-button:hover {
+
+      .login-button:hover {
         background-color: #0dad6d;
         box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
         color: #fff;
         transform: translateY(-7px);
       }
-      & .login-button:active {
+
+      .login-button:active {
         transform: translateY(-1px);
       }
-      &.login-buton:disabled {
+
+      .login-buton:disabled {
         cursor: not-allowed;
       }
     }
@@ -96,26 +111,32 @@ body {
 }
 
 @media (max-width: 1030px) {
+
   .body,
   html {
     overflow-x: hidden;
   }
-  & .login-Container {
+
+  .login-Container {
     justify-content: center;
     align-items: center;
   }
-  & .login-Left {
+
+  .login-Left {
     display: none !important;
     width: 0%;
+
     img {
       display: none;
     }
   }
-  & .login-Right {
+
+  .login-Right {
     margin-left: 0 !important;
     width: 80% !important;
   }
-  & .login-rightWrapper {
+
+  .login-rightWrapper {
     margin-left: 0 !important;
     background-color: whitesmoke;
   }

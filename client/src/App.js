@@ -8,7 +8,7 @@ import HomePage from "./Pages/HomePage/HomePage";
 import MyPosts from "./Pages/MyPosts/MyPosts";
 import Footer from "./Components/footer/Footer";
 import SinglePost from "./Pages/singlePost/SinglePost";
-import Settings from "./Pages/settings/Settings";
+import Settings from "./Pages/Settings/settings.jsx";
 export default function App() {
   return (
     <>

@@ -1,26 +1,31 @@
 body {
   overflow-x: hidden;
 }
+
 .signup-Container {
 
   width: 100vw;
-  margin-bottom:30px;
+  margin-bottom: 30px;
   display: flex;
-  & .signup-Left {
+
+  .signup-Left {
     width: 40%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+
     img {
       height: 70%;
     }
   }
-  & .signup-Right {
+
+  .signup-Right {
     margin-left: 7rem;
     width: 400px;
     height: 950px;
-    & .signup-rightWrapper {
+
+    .signup-rightWrapper {
       -webkit-box-shadow: -2px 2px 12px 7px rgba(176, 176, 176, 1);
       -moz-box-shadow: -2px 2px 12px 7px rgba(176, 176, 176, 1);
       box-shadow: -2px 2px 12px 7px rgba(176, 176, 176, 1);
@@ -29,19 +34,23 @@ body {
       margin-top: 5rem;
       height: 80%;
       padding: 2rem;
+
       span {
         opacity: 50%;
       }
+
       h1 {
         text-align: center;
         margin-bottom: 5rem;
         letter-spacing: 2px;
         color: rgb(81, 39, 219);
       }
-      & .signup-inputWrapper {
+
+      .signup-inputWrapper {
         display: flex;
         flex-direction: column;
         margin-bottom: 2rem;
+
         input {
           padding: 10px;
           background-color: white;
@@ -57,13 +66,15 @@ body {
           letter-spacing: 1.2px;
         }
       }
-      & .signup-button-wrapper {
+
+      .signup-button-wrapper {
         width: 100%;
         display: flex;
         justify-content: center;
-      
+
       }
-      & .signup-button {
+
+      .signup-button {
         padding: 1.3em 2em;
         font-size: 14px;
         text-transform: uppercase;
@@ -79,13 +90,15 @@ body {
         width: 10rem;
         outline: none;
       }
-      & .signup-button:hover {
+
+      .signup-button:hover {
         background-color: rgb(81, 39, 219);
         box-shadow: 0px 15px 20px rgba(81, 39, 219, 0.4);
         color: #fff;
         transform: translateY(-7px);
       }
-      & .signup-button:active {
+
+      .signup-button:active {
         transform: translateY(-1px);
       }
     }
@@ -93,27 +106,33 @@ body {
 }
 
 @media (max-width: 1030px) {
+
   .body,
   html {
     overflow-x: hidden;
   }
-  & .signup-Container {
+
+  .signup-Container {
     justify-content: center;
     align-items: center;
   }
-  & .signup-Left {
+
+  .signup-Left {
     display: none !important;
     width: 0%;
+
     img {
       display: none;
     }
   }
-  & .signup-Right {
+
+  .signup-Right {
     margin-left: 0 !important;
     margin-top: 100px;
     width: 80% !important;
   }
-  & .signup-rightWrapper {
+
+  .signup-rightWrapper {
     margin-left: 0 !important;
     background-color: whitesmoke;
   }

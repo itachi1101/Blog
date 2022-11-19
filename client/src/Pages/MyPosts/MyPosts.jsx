@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import AllPosts from "../AllPosts";
+import AllPosts from "../AllPost/AllPosts";
 import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../context/Context";
