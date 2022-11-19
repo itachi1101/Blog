@@ -54,7 +54,7 @@ export default function Post({ post, isLiked }) {
 
   return (
     <Card
-      sx={{ maxWidth: 300, minWidth: 300, maxHeight: "400px" }}
+      sx={{ maxWidth: 290, minWidth: 100, maxHeight: "450px" }}
       style={{ marginTop: "20px", marginLeft: "20px" }}
       className="hover"
     >

@@ -7,6 +7,8 @@ import { Context } from "../../context/Context";
 import background from "../../Photo/background.jpg";
 import { Button } from "@mui/material";
 import Typewriter from 'typewriter-effect';
+import AdPage from "../Ad Page/Ad.Page";
+import FeaturedPostsPage from "../Featured Posts/FeaturedPostsPage";
 
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
@@ -52,6 +54,10 @@ export default function HomePage() {
           </span>
         </div>
       </div>
+      <AdPage/>
+      <FeaturedPostsPage posts={posts} loading={loading}/>
+      <AdPage/>
+
       <AllPosts posts={posts} loading={loading} />
       <div className="pagination-container">
         <Button variant="outlined" onClick={gotoPrevious}>

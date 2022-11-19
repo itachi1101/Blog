@@ -1,8 +1,48 @@
-.allPostContainer{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding:10px;
+.AllPost-container {
+    height: 100%;
+    padding: 20px;
     background-color: whitesmoke;
+    margin-top: 50px;
+
+    .heading {
+        font-size: 2rem;
+        padding: 10px;
+        font-weight: bold;
+        letter-spacing: 1.2px;
+        color: green;
+        text-align: center;
+    }
+
+    .wrapper {
+        display: flex;
+    }
+
+    .left {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+
+        .subheading {
+            font-weight: bold;
+            color: gray;
+            font-size: 1.4rem;
+        }
+
+        .vAd {
+            height: 400px;
+            width: 250px;
+        }
+
+        .hAd {
+            height: 200px;
+            width: 250px;
+            margin-bottom: 40px;
+        }
+    }
+
+    .right {
+        display: flex;
+        flex-wrap: wrap;
+
+    }
 }

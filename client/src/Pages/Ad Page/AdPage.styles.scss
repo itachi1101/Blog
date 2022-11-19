@@ -1,0 +1,22 @@
+.Adcontainer{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .subheading{
+        font-weight: bold;
+        color:gray;
+        font-size: 1.4rem;
+    }
+    .wrapper{
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        img{
+            width:600px;
+            height:250px;
+        }
+    }
+
+}

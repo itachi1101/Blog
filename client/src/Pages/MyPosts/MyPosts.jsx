@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import AllPosts from "../AllPost/AllPosts";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../context/Context";
 import "./myPosts.styles.scss";
-import Sidebar from "../../Components/Sidebar/Sidebar";
 import NotPresent from "../NotPresent/NotPresent";
 
 export default function MyPosts() {
@@ -40,13 +39,13 @@ export default function MyPosts() {
           alt=""
         />
       </div>
-      <div className="home">
+      <div>
         {posts.length === 0 ? (
-          <NotPresent />
+          <NotPresent/>
         ) : (
-          <>
+         
             <AllPosts posts={posts} />
-          </>
+        
         )}
       </div>
     </>

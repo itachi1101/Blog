@@ -5,6 +5,8 @@ import Post from "../Posts/Post";
 import { Context } from "../../context/Context";
 import { CircularProgress } from "@mui/material";
 import './AllPosts.styles.scss'
+import HAd from '../../Photo/horizontalAd.jpg'
+import VAd from '../../Photo/verticalAd.png'
 export default function AllPosts({ posts, loading }) {
   const [likedarray, setLikedArray] = useState([]);
   const { token } = useContext(Context);
@@ -31,17 +33,34 @@ export default function AllPosts({ posts, loading }) {
   }, [history]);
   return (
 
-    <div className="allPostContainer">
-      {
-        loading ? <CircularProgress style={{width:"200px",height:"200px"}}></CircularProgress> :
-          posts.map((post) => (
-            <Post
-              post={post}
-              key={post.title}
-              isLiked={likedarray.indexOf(post.title) !== -1}
-            />
-          ))}
+    <div className="AllPost-container">
+      <div className="heading">Blogs</div>
+      <div className="wrapper">
+        <div className="left">
+          <div className="subheading">
+            Ads
+          </div>
+          <img className="hAd" src={HAd} />
+          <img className="vAd" src={VAd} />
+        </div>
+        <div className="right">
 
+          {
+            loading ? <div style={{ width: "700px", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <CircularProgress style={{ width: "200px", height: "200px" }}></CircularProgress>
+            </div>
+
+              :
+              posts.map((post) => (
+                <Post
+                  post={post}
+                  key={post.title}
+                  isLiked={likedarray.indexOf(post.title) !== -1}
+                />
+              ))}
+
+        </div>
+      </div>
     </div>
   );
 }

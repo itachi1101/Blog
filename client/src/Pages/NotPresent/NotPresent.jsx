@@ -10,6 +10,7 @@ export default function NotPresent() {
         height: "450px",
         marginTop: "100px",
         marginRight: "90px",
+        marginLeft:"200px"
       }}
       className="fontNot"
     >
