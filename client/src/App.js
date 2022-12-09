@@ -1,22 +1,23 @@
-import Header from "./Components/Header";
 import Login from "./Pages/Login/login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Signup from "./Pages/Signup/signup";
 import About from "./Pages/About";
 import WritePage from "./Pages/Write/WritePage";
-import HomePage from "./Pages/HomePage/HomePage";
 import MyPosts from "./Pages/MyPosts/MyPosts";
-import Footer from "./Components/footer/Footer";
 import SinglePost from "./Pages/singlePost/SinglePost";
 import Settings from "./Pages/Settings/settings.jsx";
+
+import './App.styles.scss'
+
+import FullPage from "./Pages/FullPage";
 export default function App() {
   return (
-    <>
+    <div>
+
       <Router>
-        <Header />
         <Switch>
           <Route exact path="/">
-            <HomePage />
+           <FullPage/>
           </Route>
           <Route path="/login">
             <Login />
@@ -40,8 +41,7 @@ export default function App() {
             <SinglePost />
           </Route>
         </Switch>
-        <Footer/>
       </Router>
-    </>
+    </div>
   );
 }
