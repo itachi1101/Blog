@@ -1,6 +1,7 @@
 import HorizontalCard from '../../Components/Horizontal cards/HorizontalCards'
 import MainCard from '../../Components/MainCard/MainCard'
 import './HomePage.styles.scss'
+import horizontalData from '../../horizontalCardData'
 export default function HomePageNew() {
     return (
         <div className="homepage-container">
@@ -14,9 +15,14 @@ export default function HomePageNew() {
             <div className="home-card-container-main">
                 <MainCard />
                 <div className="small-card">
-                    <HorizontalCard />
-                    <HorizontalCard />
-                    <HorizontalCard />
+                    {
+                        horizontalData.map((data) => {
+                            return (
+                                <HorizontalCard key={data.id} title={data.title} date={data.date} url={data.url} />
+                            )
+
+                        })
+                    }
                 </div>
             </div>
         </div>
