@@ -1,89 +1,75 @@
-import "./settings.css";
-import { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useEffect, useContext, useState } from "react";
+import HeaderNew from "../../Components/Header/Header";
 import { Context } from "../../context/Context";
-import axios from "axios";
 
-export default function Settings() {
-  const [file, setFile] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-  const { token ,dispatch} = useContext(Context);
-  const history = useHistory();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+// external libraray for error handling
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Loader from "../../Components/Loader/Loader";
+
+
+import "./settings.scss";
+import { getPostByUser } from "../../apiCalls";
+import FooterNew from "../../Components/FooterNew/FooterNew";
+import InvertedPostCard from "../../Components/InvertedCard/InvertedCard";
+export default function ProfilePage() {
+  const { user } = useContext(Context)
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(false)
+  useEffect(async () => {
+    setLoading(true)
+    function handleError(err) {
+      toast.error(err, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    await axios
-      .post(
-        "http://localhost:5000/api/user/updateUser",
-        { username: username, password: password },
-        config
-      )
-      .then(()=>{dispatch({type:"LOGOUT"});history.push("/")})
-      .catch((err) => console.log(err));
-  };
-  useEffect(() => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const getUser = async () => {
-      try {
-        const { data } = await axios.get(
-          "http://localhost:5000/api/user/getUser",
-          config
-        );
-        setCurrentUser(data);
-      } catch (err) {
-        console.log({ error: err.message });
+        Authorization: `Bearer ${user.token}`
       }
-    };
-    getUser();
-  }, [token]);
+    }
+    try {
+      const data = await getPostByUser(config)
+      setPosts(data)
+      setLoading(false)
+    } catch (error) {
+      handleError(error)
+      setLoading(false)
+    }
+  }, [user])
   return (
-    <div className="settings" style={{ marginTop: "60px" }}>
-      <div className="settingsWrapper">
-        <div className="settingsTitle">
-          <span className="settingsUpdateTitle">Update Your Account</span>
+    <>
+      <HeaderNew />
+      <div className="profile-page-container">
+        <div className="horizontal-line"></div>
+        <div className="profile-image">
+          <img src={user.imagePath} />
         </div>
-        <form className="settingsForm" type="submit" onSubmit={handleSubmit}>
-          <label>Enter New Username</label>
-          <input
-            type="text"
-            placeholder={currentUser?.username || "hello"}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <label>Email</label>
-          <input
-            type="email"
-            placeholder={currentUser?.email || "hello"}
-            disabled
-          />
-          <label>Enter New Password</label>
-          <input
-            type="password"
-            placeholder="New Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button className="settingsSubmit" type="submit">
-            Update
-          </button>
-          {success && (
-            <span
-              style={{ color: "green", textAlign: "center", marginTop: "20px" }}
-            >
-              Profile has been updated...
-            </span>
+        <div className="username">
+          {user.username.toUpperCase()}
+        </div>
+        <div className="title">
+          POSTS
+        </div>
+        <div className="horizontal-line"></div>
+        <div className="post-container">
+          {loading ? <Loader /> : (
+            posts.map((d) => {
+
+              return (
+                <InvertedPostCard key={d._id} />
+              )
+            })
           )}
-        </form>
+        </div>
+
       </div>
-    </div>
-  );
+      <FooterNew />
+    </>
+  )
 }

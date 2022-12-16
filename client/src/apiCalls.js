@@ -38,7 +38,7 @@ export const createPost = async (config, d) => {
 
 export const createActivity = async (data) => {
   try {
-    await axios.post(getApiUrl("activity/create"),data)
+    await axios.post(getApiUrl("activity/create"), data)
     return Promise.resolve()
   } catch (error) {
     console.log(error.message)
@@ -71,6 +71,24 @@ export const deletePostById = async (id) => {
   try {
     await axios.delete(getApiUrl(`post/${id}`))
     return Promise.resolve()
+  } catch (error) {
+    return Promise.reject(error.message)
+  }
+}
+
+export const getAllPosts = async (pageNumber) => {
+  try {
+    const { data } = await axios.get(getApiUrl(`post/allposts?page=${pageNumber}`))
+    return Promise.resolve(data)
+  } catch (error) {
+    return Promise.reject(error.message)
+  }
+}
+
+export const getPostByUser = async (config) => {
+  try {
+    const {data} = await axios.get(getApiUrl("post/myposts/"), config)
+    return Promise.resolve(data)
   } catch (error) {
     return Promise.reject(error.message)
   }

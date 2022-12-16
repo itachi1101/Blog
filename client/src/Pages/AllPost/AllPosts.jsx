@@ -1,66 +1,106 @@
-import { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import axios from "axios";
-import PostCard from '../../Components/Post cards/PostCard'
-import { Context } from "../../context/Context";
-import { CircularProgress } from "@mui/material";
+import { useEffect, useState, useContext } from 'react'
+import HeaderNew from '../../Components/Header/Header'
+import InvertedPostCard from '../../Components/InvertedCard/InvertedCard';
+import { getAllPosts } from '../../apiCalls';
+import { Context } from '../../context/Context';
+import FooterNew from '../../Components/FooterNew/FooterNew';
+
+// third party
+import { Button } from 'react-bootstrap';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Loader from "../../Components/Loader/Loader";
+
+
+// styles
 import './AllPosts.styles.scss'
-import HAd from '../../Photo/horizontalAd.jpg'
-import VAd from '../../Photo/verticalAd.png'
-export default function AllPosts({ posts, loading }) {
-  const [likedarray, setLikedArray] = useState([]);
-  const { token } = useContext(Context);
-  const history = useHistory()
-  useEffect(() => {
-    const fetchLikedPosts = async () => {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      try {
-        const result = await axios.get(
-          "http://localhost:5000/api/user/getlikedposts/",
-          config
-        );
 
-        setLikedArray(result.data.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchLikedPosts();
-  }, [history]);
+
+export default function AllPostsPage() {
+  const [loading, setLoading] = useState(false)
+  const [posts, setPosts] = useState([])
+  const [pageNumber, setPageNumber] = useState(0)
+  const [numberOfPages, setNumberOfPages] = useState(0)
+  const pages = new Array(numberOfPages).fill(null).map((v, i) => i)
+  const { user } = useContext(Context)
+  useEffect(async () => {
+    setLoading(true)
+    function handleError(err) {
+      toast.error(err, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
+
+    try {
+      const data = await getAllPosts(pageNumber)
+      setPosts(data.posts)
+      setNumberOfPages(data.totalPages)
+      setLoading(false)
+    } catch (error) {
+      handleError(error.message)
+      setLoading(false)
+    }
+  }, [pageNumber, user.token])
+  const gotoPrevious = () => {
+    setPageNumber(Math.max(0, pageNumber - 1));
+  };
+  const gotoNext = () => {
+    setPageNumber(Math.min(numberOfPages - 1, pageNumber + 1));
+  };
   return (
+    <>
+      <HeaderNew />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      {loading ? <Loader /> :
+        <div className="pagination-container">
+          <div className="horizontal-line"></div>
+          <div className="post-container">
 
-    <div className="AllPost-container">
-      <div className="heading">Blogs</div>
-      <div className="wrapper">
-        <div className="left">
-          <div className="subheading">
-            Ads
+            {
+              posts.map((data) => {
+                return (
+                  <InvertedPostCard key={data._id} id={data._id} />
+                )
+              })
+            }
           </div>
-          <img className="hAd" src={HAd} />
-          <img className="vAd" src={VAd} />
+          <div className="btn-container">
+            <Button variant="light" onClick={gotoPrevious}>
+              Previous
+            </Button>
+            {pages.map((pageIndex) => (
+              <Button
+                variant="light"
+                key={pageIndex}
+                onClick={() => setPageNumber(pageIndex)}
+              >
+                {pageIndex + 1}
+              </Button>
+            ))}
+            <Button variant="light" onClick={gotoNext}>
+              Next
+            </Button>
+          </div>
         </div>
-        <div className="right">
+      }
 
-          {
-            loading ? <div style={{ width: "700px", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <CircularProgress style={{ width: "200px", height: "200px" }}></CircularProgress>
-            </div>
-
-              :
-              posts.map((post) => (
-                <PostCard
-                 
-                  key={post.title}
-                 
-                />
-              ))}
-
-        </div>
-      </div>
-    </div>
-  );
+      <FooterNew />
+    </>
+  )
 }
