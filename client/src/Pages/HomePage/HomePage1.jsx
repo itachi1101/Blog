@@ -1,7 +1,7 @@
 import HorizontalCard from '../../Components/Horizontal cards/HorizontalCards'
 import MainCard from '../../Components/MainCard/MainCard'
 import './HomePage.styles.scss'
-import horizontalData from '../../horizontalCardData'
+import horizontalData from '../../horizontalCardData.js'
 export default function HomePageNew() {
     return (
         <div className="homepage-container">
