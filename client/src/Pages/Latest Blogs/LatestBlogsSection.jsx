@@ -1,4 +1,4 @@
-import Card from '../../Components/Card/Card'
+import PostCard from '../../Components/Post cards/PostCard'
 import './LatestBlogsSection.styles.scss'
 export default function LatestBlogsSection() {
     return (
@@ -7,12 +7,10 @@ export default function LatestBlogsSection() {
                 Latest Blogs
             </div>
             <div className="latest-blogs-wrapper">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                <PostCard />
+                <PostCard />
+                <PostCard />
+                <PostCard />
 
             </div>
         </div>

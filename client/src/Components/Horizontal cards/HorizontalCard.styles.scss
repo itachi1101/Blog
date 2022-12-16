@@ -2,8 +2,15 @@
     max-width: 500px;
     display: flex;
     margin-bottom: 10px;
-    @media screen and (max-width:1000px) {
+    border-style: solid;
+    border-bottom-width: 1px;
+    border-color: gray;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    padding-bottom: 10px;
 
+    @media screen and (max-width:1000px) {
         margin-bottom: 6px;
         border-style: solid;
         border-bottom-width: 1px;
@@ -11,15 +18,17 @@
         border-top: 0;
         border-right: 0;
         border-left: 0;
-        padding:10px;
-        max-width: 100%;
+        padding: 10px;
     }
 
     .image-container {
-        width: 500px;
+        min-width: 301px;
+        max-height: 180px;
 
         @media screen and (max-width:1000px) {
-            max-width: 270px;
+            max-width: 220px;
+            min-width: 0px;
+
         }
 
         img {

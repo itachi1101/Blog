@@ -1,4 +1,4 @@
-import Card from "../../Components/Card/Card";
+import PostCard from "../../Components/Post cards/PostCard";
 import './Page2.styles.scss'
 export default function Page2(){
     return(
@@ -7,11 +7,9 @@ export default function Page2(){
                 Editor's Choice
             </div>
             <div className="page2-wrapper">
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-             
+                <PostCard/>
+                <PostCard/>
+                <PostCard/>
                 
             </div>
         </div>

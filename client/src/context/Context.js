@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react";
 import Reducer from "./Reducer";
 const INITIAL_STATE = {
-  token: JSON.parse(localStorage.getItem("User")) || null,
+  user: JSON.parse(localStorage.getItem("User")) || null,
   isFetching: false,
   error: false,
 };
@@ -13,7 +13,7 @@ export const ContextProvider = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        token: state.token,
+        user: state.user,
         isFetching: state.isFetching,
         error: state.error,
         dispatch,

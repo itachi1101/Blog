@@ -1,12 +1,27 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useContext, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { Context } from '../../context/Context'
 import Logo from '../../Photo/logo.png'
-
+import sigmaMale from '../../Photo/profileImage.jpg'
 
 import './Header.styles.scss'
 
 
 export default function HeaderNew() {
-    const navLinks = ["posts", "write", "about", "contact"]
+    const [currentUser, setCurrentUser] = useState(null)
+    const { user, dispatch } = useContext(Context)
+    const history = useHistory()
+    useEffect(() => {
+        if (user) {
+            setCurrentUser(user.username.split("")[0])
+        }
+    }, [user])
+    const handleLogout = () => {
+        dispatch({ type: "LOGOUT" })
+        localStorage.removeItem("User")
+        history.push("/")
+    }
     return (
         <div className="header-container">
             <div className="wrapper">
@@ -23,9 +38,27 @@ export default function HeaderNew() {
                     <Link to="/about" className="link-style">ABOUT</Link>
                     <Link to="/contact" className="link-style">CONTACT</Link>
                 </div>
-                <div className="login-container">
-                    <Link to="/login" className="link-style">LOGIN</Link>
-                </div>
+                {
+                    currentUser &&
+                    <div className="photo-name-container">
+                        <span>{currentUser}</span>
+                        <Link to="/profile">
+                            <div className="img-container">
+                                <img src={sigmaMale} />
+                            </div>
+                        </Link>
+                    </div>
+                }
+                {
+                    !currentUser ? (
+                        <div className="login-container">
+
+                            <Link to="/login" className="link-style">
+                                LOGIN
+                            </Link>
+                        </div>
+                    ) : ""
+                }
             </div>
         </div>
     )
