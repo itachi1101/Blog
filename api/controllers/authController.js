@@ -19,11 +19,13 @@ module.exports.signup = async (req, res) => {
 
 module.exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.Login(email, password);
+    const { email } = req.body;
+    const user = await User.Login(email, req.body.password);
     const token = await user.generateAuthToken();
-    res.status(200).json({
-      user: user._doc,
+    const {password,createdAt, updatedAt, isAdmin, __v, liked,pic,...others } =
+    user._doc;
+    res.status(200).send({
+      others,
       token,
       login: "Success",
     });

@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import "./InvertedCard.styles.scss";
+import "./PostCard.styles.scss";
 import image from '../../Photo/sample2.jpg'
-export default function InvertedPostCard() {
+export default function PostCard() {
     return (
-        <div className="inverted-post">
+        <div className="post">
             <img
                 className="postImg"
                 src={image}
                 alt=""
             />
-            <div className="inverted-postInfo">
+            <div className="postInfo">
                 <div className="postCats">
                     <Link className="link" to="/posts?cat=Music">
                         <span className="postCat">
@@ -22,7 +22,7 @@ export default function InvertedPostCard() {
                         </span>
                     </Link>
                 </div>
-                <span className="inverted-postTitle">
+                <span className="postTitle">
                     <Link to="/post/abc" className="link">
                         Lorem ipsum dolor sit amet
                     </Link>

@@ -1,31 +1,41 @@
 const Post = require("../models/post");
 module.exports.create = async (req, res) => {
   try {
-    const author = req.user._id.toHexString();
     if (req.file) {
       const pic = req.file.buffer;
-      const { title, description, isPrivate } = req.body;
+      const { title, description, isPrivate, type,author } = req.body;
       const post = await Post.create({
         title,
         description,
         author,
         isPrivate,
         pic,
+        type
       });
-      res.status(201).json({
-        post: post._doc,
+      res.status(201).send({
+        title,
+        description,
+        author,
+        isPrivate,
+        pic,
+        type,
         PostCreated: "successful",
       });
     } else {
-      const { title, description, isPrivate } = req.body;
+      const { title, description, isPrivate,author} = req.body;
       const post = await Post.create({
         title,
         description,
         author,
         isPrivate,
       });
+
       res.status(201).json({
-        post: post._doc,
+        title,
+        description,
+        author,
+        isPrivate,
+        type,
         PostCreated: "successful",
       });
     }
@@ -39,8 +49,8 @@ module.exports.create = async (req, res) => {
 
 module.exports.searchUserPosts = async (req, res) => {
   try {
-    const author = req.user._id.toHexString();
-    const posts = await Post.find({ author: author });
+    const author = req.email;
+    const posts = await Post.find({ author});
     if (posts) {
       res.status(200).json({
         data: posts,

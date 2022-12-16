@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../context/Context";
 import "./myPosts.styles.scss";
-import NotPresent from "../NotPresent/NotPresent";
+
 
 export default function MyPosts() {
   const [posts, setPosts] = useState([]);
@@ -40,13 +40,7 @@ export default function MyPosts() {
         />
       </div>
       <div>
-        {posts.length === 0 ? (
-          <NotPresent/>
-        ) : (
-         
-            <AllPosts posts={posts} />
-        
-        )}
+        <AllPosts posts={posts} />
       </div>
     </>
   );
