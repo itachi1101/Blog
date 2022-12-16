@@ -29,7 +29,11 @@ export default function FullPageBlog() {
     const [like, setLike] = useState(false)
     const location = useLocation()
     const path = location.pathname.split("/")[2];
-
+    const config = {
+        headers: {
+            Authorization: `Bearer ${user.token}`
+        }
+    }
     function handleError(err) {
         toast.error(err, {
             position: "top-center",
@@ -61,10 +65,13 @@ export default function FullPageBlog() {
 
     }
     const handleDelete = async () => {
+        setLoading(true)
         try {
-            await deletePostById(path)
-            history.push('/')
+            await deletePostById(path, config)
+            history.push("/")
+            setLoading(false)
         } catch (error) {
+            setLoading(false)
             handleError(error)
         }
     }
@@ -73,6 +80,7 @@ export default function FullPageBlog() {
         const value = imageURL.split('/')[8]
         const publicId = value.split('.')[0]
         const imagePath = `post-photos/${publicId}`
+
         const data = new FormData()
         data.append("description", description)
         data.append("imagePath", imagePath)
@@ -80,11 +88,7 @@ export default function FullPageBlog() {
             data.append("image", file)
         }
         console.log(data)
-        const config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`
-            }
-        }
+
         try {
             await updatePostById(config, data, path)
             setLoading(false)
@@ -157,7 +161,7 @@ export default function FullPageBlog() {
 
                     </div>
                     {
-                        user._id === authorId && updatedMode === true ? (<textarea
+                        user && user._id === authorId && updatedMode === true ? (<textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             style={{
@@ -180,7 +184,7 @@ export default function FullPageBlog() {
 
                     {
 
-                        user._id === authorId ? (
+                        user && user._id === authorId ? (
 
                             <div className="btn-container">
                                 {

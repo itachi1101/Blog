@@ -1,40 +1,33 @@
 import { Link } from "react-router-dom";
 import "./PostCard.styles.scss";
-import image from '../../Photo/sample2.jpg'
-export default function PostCard() {
+
+export default function PostCard({ id, title, description, imageURL, date }) {
     return (
         <div className="post">
             <img
                 className="postImg"
-                src={image}
+                src={imageURL}
                 alt=""
             />
             <div className="postInfo">
                 <div className="postCats">
-                    <Link className="link" to="/posts?cat=Music">
-                        <span className="postCat">
-                            Music
-                        </span>
-                    </Link>
-                    <Link className="link" to="/posts?cat=Music">
-                        <span className="postCat">
-                            Life
-                        </span>
-                    </Link>
+                    <span className="postCat">
+                        Music
+                    </span>
+                    <span className="postCat">
+                        Life
+                    </span>
                 </div>
                 <span className="postTitle">
-                    <Link to="/post/abc" className="link">
-                        Lorem ipsum dolor sit amet
+                    <Link to={`/post/${id}`} className="link">
+                        {title}
                     </Link>
                 </span>
                 <div className="hr"></div>
-                <span className="postDate">7 Dec, 2022</span>
+                <span className="postDate">{date}</span>
             </div>
             <p className="postDesc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda
-                officia architecto deserunt deleniti? Labore ipsum aspernatur magnam
-                fugiat, reprehenderit praesentium blanditiis quos cupiditate ratione
-                atque, exercitationem quibusdam, reiciendis odio laboriosam?
+                {description}
             </p>
         </div>
     );
