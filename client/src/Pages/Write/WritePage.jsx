@@ -12,9 +12,8 @@ import { createActivity, createPost } from "../../apiCalls";
 // external libraray for error handling
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import Loader from "../../Components/Loader/Loader";
-import { getApiUrl } from "../../rootFile";
+
 
 
 export default function WritePage() {

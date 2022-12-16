@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./InvertedCard.styles.scss";
 import image from '../../Photo/sample2.jpg'
-export default function InvertedPostCard() {
+export default function InvertedPostCard({id}) {
     return (
         <div className="inverted-post">
             <img
@@ -23,7 +23,7 @@ export default function InvertedPostCard() {
                     </Link>
                 </div>
                 <span className="inverted-postTitle">
-                    <Link to="/post/abc" className="link">
+                    <Link to={`/post/${id}`} className="link">
                         Lorem ipsum dolor sit amet
                     </Link>
                 </span>
