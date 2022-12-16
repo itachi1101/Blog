@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import Post from "../Posts/Post";
+import PostCard from '../../Components/Post cards/PostCard'
 import { Context } from "../../context/Context";
 import { CircularProgress } from "@mui/material";
 import './AllPosts.styles.scss'
@@ -52,10 +52,10 @@ export default function AllPosts({ posts, loading }) {
 
               :
               posts.map((post) => (
-                <Post
-                  post={post}
+                <PostCard
+                 
                   key={post.title}
-                  isLiked={likedarray.indexOf(post.title) !== -1}
+                 
                 />
               ))}
 

@@ -10,6 +10,7 @@ import Settings from "./Pages/Settings/settings.jsx";
 import './App.styles.scss'
 
 import FullPage from "./Pages/FullPage";
+import FullPageBlog from "./Components/FullPageBlog/FullPageBlog";
 export default function App() {
   return (
     <div>
@@ -38,7 +39,7 @@ export default function App() {
             <MyPosts />
           </Route>
           <Route path="/post/:id">
-            <SinglePost />
+          <FullPageBlog/>
           </Route>
         </Switch>
       </Router>

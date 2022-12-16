@@ -3,7 +3,6 @@ import { useContext, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { Context } from '../../context/Context'
 import Logo from '../../Photo/logo.png'
-import sigmaMale from '../../Photo/profileImage.jpg'
 
 import './Header.styles.scss'
 
@@ -14,7 +13,7 @@ export default function HeaderNew() {
     const history = useHistory()
     useEffect(() => {
         if (user) {
-            setCurrentUser(user.username.split("")[0])
+            setCurrentUser(user.username)
         }
     }, [user])
     const handleLogout = () => {
@@ -44,7 +43,7 @@ export default function HeaderNew() {
                         <span>{currentUser}</span>
                         <Link to="/profile">
                             <div className="img-container">
-                                <img src={sigmaMale} />
+                                <img src={user.imagePath} />
                             </div>
                         </Link>
                     </div>
