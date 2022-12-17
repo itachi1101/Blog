@@ -63,7 +63,9 @@
             color: white;
             font-size: 2rem;
             font-size: bolder;
-
+            &:hover{
+                color:goldenrod;
+            }
             @media screen and (max-width:1000px) {
                 font-size: 1.4rem;
             }

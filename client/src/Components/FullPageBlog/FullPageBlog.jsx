@@ -29,11 +29,6 @@ export default function FullPageBlog() {
     const [like, setLike] = useState(false)
     const location = useLocation()
     const path = location.pathname.split("/")[2];
-    const config = {
-        headers: {
-            Authorization: `Bearer ${user.token}`
-        }
-    }
     function handleError(err) {
         toast.error(err, {
             position: "top-center",
@@ -65,6 +60,11 @@ export default function FullPageBlog() {
 
     }
     const handleDelete = async () => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
         setLoading(true)
         try {
             await deletePostById(path, config)
@@ -76,19 +76,21 @@ export default function FullPageBlog() {
         }
     }
     const handleUpdate = async () => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
         setLoading(true)
         const value = imageURL.split('/')[8]
         const publicId = value.split('.')[0]
         const imagePath = `post-photos/${publicId}`
-
         const data = new FormData()
         data.append("description", description)
-        data.append("imagePath", imagePath)
+        data.append("imagePublicId", imagePath)
         if (file) {
             data.append("image", file)
         }
-        console.log(data)
-
         try {
             await updatePostById(config, data, path)
             setLoading(false)
@@ -98,6 +100,7 @@ export default function FullPageBlog() {
             setLoading(false)
         }
     }
+
     return (
         <>
             {loading && <Loader />}
@@ -147,14 +150,16 @@ export default function FullPageBlog() {
                     }
 
                     <div className="author-details">
-                        <div className="about">
-                            <div className="author-image">
-                                <img src={authorImage} />
+                        <Link to={`/user/${authorId}`}>
+                            <div className="about">
+                                <div className="author-image">
+                                    <img src={authorImage} />
+                                </div>
+                                <div className="author-name">
+                                    <span style={{ color: "black" }}>Author:</span> {author}
+                                </div>
                             </div>
-                            <div className="author-name">
-                                <span style={{ color: "black" }}>Author:</span> {author}
-                            </div>
-                        </div>
+                        </Link>
                         <div className="like-btn" onClick={handleLike}>
                             <FaThumbsUp style={{ color: `${like ? "coral" : "gray"}` }} />
                         </div>

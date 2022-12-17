@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import "./InvertedCard.styles.scss";
-import image from '../../Photo/sample2.jpg'
 export default function InvertedPostCard({ id, imageURL, title, description, date }) {
     return (
         <div className="inverted-post">

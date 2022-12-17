@@ -1,5 +1,5 @@
 import './HorizontalCard.styles.scss'
-import image from '../../Photo/h1.jpg'
+import { Link } from 'react-router-dom'
 export default function HorizontalCard(props) {
     return (
         <div className="horizontal-card-container">
@@ -8,7 +8,10 @@ export default function HorizontalCard(props) {
             </div>
             <div className="wrapper">
                 <div className="date">{props.date}</div>
-                <h1 className="heading">{props.title}</h1>
+                <Link to={`/post/${props.id}`}>
+
+                    <h1 className="heading">{props.title}</h1>
+                </Link>
             </div>
         </div>
     )

@@ -25,7 +25,14 @@ export const loginUser = async (email, password) => {
   }
 };
 
-
+export const getUserById = async (id) => {
+  try {
+    const { data } = await axios.get(getApiUrl(`user/${id}/`))
+    return Promise.resolve(data)
+  } catch (error) {
+    return Promise.reject(error.message)
+  }
+}
 export const createPost = async (config, d) => {
   try {
     const { data } = await axios.post(getApiUrl("post/create"), d, config)
@@ -36,15 +43,6 @@ export const createPost = async (config, d) => {
 }
 
 
-export const createActivity = async (data) => {
-  try {
-    await axios.post(getApiUrl("activity/create"), data)
-    return Promise.resolve()
-  } catch (error) {
-    console.log(error.message)
-    return Promise.reject(error.message)
-  }
-}
 
 export const getPostById = async (id) => {
   try {
@@ -67,9 +65,9 @@ export const updatePostById = async (config, data, id) => {
 }
 
 
-export const deletePostById = async (id,config) => {
+export const deletePostById = async (id, config) => {
   try {
-    await axios.delete(getApiUrl(`post/${id}`),config)
+    await axios.delete(getApiUrl(`post/${id}`), config)
     return Promise.resolve()
   } catch (error) {
     return Promise.reject(error.message)
@@ -104,11 +102,39 @@ export const getRecentPosts = async () => {
 
   }
 }
+export const getFreePostById = async (id) => {
+  try {
+    const {data}  = await axios.get(getApiUrl(`post/public/${id}`))
+    return Promise.resolve(data)
 
-export const signupUser=async(data)=>{
-try {
-  await axios.post(getApiUrl("signup/"),data)
-} catch (error) {
-  return Promise.reject(error.message)
+  } catch (error) {
+    return Promise.reject(error.message)
+  }
 }
+
+export const createActivity = async (data) => {
+  try {
+    await axios.post(getApiUrl("activity/create"), data)
+    return Promise.resolve()
+  } catch (error) {
+    return Promise.reject(error.message)
+  }
+}
+
+export const getActivity = async () => {
+  try {
+    const { data } = await axios.get(getApiUrl("activity/trending"))
+    return Promise.resolve(data)
+  } catch (error) {
+    return Promise.reject(error.message)
+  }
+}
+
+
+export const signupUser = async (data) => {
+  try {
+    await axios.post(getApiUrl("signup/"), data)
+  } catch (error) {
+    return Promise.reject(error.message)
+  }
 }
