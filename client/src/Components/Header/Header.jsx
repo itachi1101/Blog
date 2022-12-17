@@ -19,7 +19,7 @@ export default function HeaderNew() {
     const handleLogout = () => {
         dispatch({ type: "LOGOUT" })
         localStorage.removeItem("User")
-        history.push("/")
+        window.location.reload()
     }
     return (
         <div className="header-container">
@@ -35,7 +35,6 @@ export default function HeaderNew() {
                     <Link to="/posts" className="link-style">POSTS</Link>
                     <Link to="/write" className="link-style">WRITE</Link>
                     <Link to="/about" className="link-style">ABOUT</Link>
-                    <Link to="/contact" className="link-style">CONTACT</Link>
                 </div>
                 {
                     currentUser &&
@@ -56,7 +55,12 @@ export default function HeaderNew() {
                                 LOGIN
                             </Link>
                         </div>
-                    ) : ""
+                    ) : <div className="login-container">
+
+                        <div onClick={handleLogout} className="link-style">
+                            LOGOUT
+                        </div>
+                    </div>
                 }
             </div>
         </div>

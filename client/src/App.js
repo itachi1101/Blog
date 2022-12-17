@@ -13,9 +13,12 @@ import ProfilePage from "./Pages/Settings/settings.jsx";
 
 
 import './App.styles.scss'
+import { useContext } from "react";
+import { Context } from "./context/Context";
 
 
 export default function App() {
+  const {user} =useContext(Context)
   return (
     <div>
 
@@ -37,7 +40,10 @@ export default function App() {
             <About />
           </Route>
           <Route path="/write">
-            <WritePage />
+            {
+
+              user ? <WritePage /> : <Login />
+            }
           </Route>
           <Route path="/posts">
             <AllPostsPage />

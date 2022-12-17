@@ -22,7 +22,6 @@ export default function AllPostsPage() {
   const [pageNumber, setPageNumber] = useState(0)
   const [numberOfPages, setNumberOfPages] = useState(0)
   const pages = new Array(numberOfPages).fill(null).map((v, i) => i)
-  const { user } = useContext(Context)
   useEffect(async () => {
     setLoading(true)
     function handleError(err) {
@@ -46,7 +45,7 @@ export default function AllPostsPage() {
       handleError(error.message)
       setLoading(false)
     }
-  }, [pageNumber, user.token])
+  }, [pageNumber])
   const gotoPrevious = () => {
     setPageNumber(Math.max(0, pageNumber - 1));
   };
@@ -75,7 +74,7 @@ export default function AllPostsPage() {
             {
               posts.map((data) => {
                 return (
-                  <InvertedPostCard key={data._id} id={data._id} />
+                  <InvertedPostCard key={data._id} id={data._id} imageURL={data.imagePath} title={data.title} description={data.description} date={data.createdAt}/>
                 )
               })
             }

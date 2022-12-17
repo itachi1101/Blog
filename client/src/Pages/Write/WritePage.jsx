@@ -107,7 +107,7 @@ export default function WritePage() {
 
             <form className="writeForm" onSubmit={handleSubmit}>
               <div className="writeFormGroup">
-                <div className="photo-upload-container">
+                <div className="photo-upload-container1">
                   <span>Upload Photo</span>
                   <label htmlFor="fileInput">
                     <FaPlusCircle style={{ fontSize: "35px", color: 'gray' }} />
@@ -116,6 +116,8 @@ export default function WritePage() {
                     type="file"
                     id="fileInput"
                     onChange={(e) => setFile(e.target.files[0])}
+                    required
+                    
                   />
                 </div>
                 <input
