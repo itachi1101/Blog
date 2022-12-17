@@ -36,6 +36,7 @@ export default function ProfilePage() {
     try {
       const data = await getPostByUser(config)
       setPosts(data)
+      
       setLoading(false)
     } catch (error) {
       handleError(error)
@@ -62,7 +63,7 @@ export default function ProfilePage() {
             posts.map((d) => {
 
               return (
-                <InvertedPostCard key={d._id} />
+                <InvertedPostCard key={d._id} id={d._id} title={d.title} description={d.description} date={d.createdAt} imageURL={d.imagePath} />
               )
             })
           )}

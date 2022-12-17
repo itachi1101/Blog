@@ -2,10 +2,12 @@ import { Badge, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import HeaderNew from "../Components/Header/Header";
+import HeaderNew from "../../Components/Header/Header";
+
+import './About.styles.scss'
 export default function About() {
   return (
-    <>
+    <div className="about-container">
       <HeaderNew />
       <Container
         style={{
@@ -97,6 +99,6 @@ export default function About() {
           </Card.Body>
         </Card>
       </Container>
-    </>
+    </div>
   );
 }

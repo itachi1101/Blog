@@ -9,9 +9,9 @@
     .top-trending-section-container-heading {
         font-weight: bold;
         color: coral;
-        width: 98%;
+        width: 90%;
         margin: auto;
-
+        margin-bottom: 20px;
         @media screen and (max-width:1000px) {
             width: 100%;
             text-align: center;
@@ -21,7 +21,7 @@
     }
 
     .top-trending-section-container-wrapper {
-        width: 98%;
+        width: 90%;
         margin: auto;
         display: flex;
         justify-content: space-around;

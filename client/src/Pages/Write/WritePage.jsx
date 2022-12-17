@@ -44,7 +44,7 @@ export default function WritePage() {
     data.append("title", titleRef.current.value);
     data.append("description", descRef.current.value);
     data.append("draft", isPrivate);
-    data.append("author", user.username)
+    data.append("author", user.email)
     data.append("category", category)
     data.append("authorId", user._id)
     data.append("authorImage", user.imagePath)

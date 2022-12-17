@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 
 import Signup from "./Pages/Signup/signup";
-import About from "./Pages/About";
+import About from "./Pages/About Us/About";
 import WritePage from "./Pages/Write/WritePage";
 import FullPage from "./Pages/FullPage";
 import FullPageBlog from "./Components/FullPageBlog/FullPageBlog";
@@ -15,10 +15,11 @@ import ProfilePage from "./Pages/Settings/settings.jsx";
 import './App.styles.scss'
 import { useContext } from "react";
 import { Context } from "./context/Context";
+import UserProfilePage from "./Pages/ProfilePage/ProfilePage";
 
 
 export default function App() {
-  const {user} =useContext(Context)
+  const { user } = useContext(Context)
   return (
     <div>
 
@@ -50,6 +51,9 @@ export default function App() {
           </Route>
           <Route path="/post/:id">
             <FullPageBlog />
+          </Route>
+          <Route path="/user/:id">
+            <UserProfilePage />
           </Route>
         </Switch>
       </Router>

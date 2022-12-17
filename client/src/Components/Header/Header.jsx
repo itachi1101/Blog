@@ -37,27 +37,23 @@ export default function HeaderNew() {
                     <Link to="/about" className="link-style">ABOUT</Link>
                 </div>
                 {
-                    currentUser &&
-                    <div className="photo-name-container">
-                        <span>{currentUser}</span>
-                        <Link to="/profile">
-                            <div className="img-container">
-                                <img src={user.imagePath} />
-                            </div>
-                        </Link>
-                    </div>
-                }
-                {
                     !currentUser ? (
                         <div className="login-container">
 
-                            <Link to="/login" className="link-style">
+                            <Link to="/login" className="link-btn">
                                 LOGIN
                             </Link>
                         </div>
                     ) : <div className="login-container">
-
-                        <div onClick={handleLogout} className="link-style">
+                        <div className="photo-name-container">
+                            <span>Welcome {currentUser.split(' ')[0]}</span>
+                            <Link to="/profile">
+                                <div className="img-container">
+                                    <img src={user.imagePath} />
+                                </div>
+                            </Link>
+                        </div>
+                        <div onClick={handleLogout} className="link-btn1">
                             LOGOUT
                         </div>
                     </div>

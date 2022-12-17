@@ -1,4 +1,4 @@
-.inverted-post {
+.trending-inverted-post {
     max-width: 350px;
     display: flex;
     flex-direction: column;
@@ -54,12 +54,13 @@
             font-weight: 900;
             margin-top: 15px;
             cursor: pointer;
+
             .link {
-                color:white;
+                color: gray;
                 font-size: 26px;
 
                 &:hover {
-                    color: goldenrod;
+                    color: white;
                 }
 
                 @media screen and (max-width:1000px) {
